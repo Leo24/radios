@@ -1,0 +1,35 @@
+/* стиль поля */
+.edit_f{
+ color:#d0d0d0;
+ margin-top: 15px;
+ background-image: none;
+ background-color: rgb(255, 255, 255);
+ border: 1px solid rgb(200, 200, 200);
+ border-top-left-radius: 0px;
+ border-top-right-radius: 0px;
+ border-bottom-right-radius: 0px;
+ border-bottom-left-radius: 0px; height: 25px;
+ padding: 5px 10px;
+ width: 220px;
+ }
+/* стиль поля по умолчанию */
+.edit_f_te{color:#525151;}
+
+/* Ошибка ввода */
+.edit_f_error{background-color: #E01B1E !important;}
+  
+/* Стиль кнопки */
+.sendbtn { cursor: hand; cursor: pointer;	margin-top: 15px;}
+
+.label_sndok{
+	position:relative;
+	top:150px;
+	width:100%;
+	text-align:center;
+	color:#666;
+	display:visible !important;
+}
+.progressimg{
+	position:relative;
+	top:150px;
+}

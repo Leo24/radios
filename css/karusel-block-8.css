@@ -1,0 +1,100 @@
+.wrapper {
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/**
+ * Use this wrapper only for demo purposes
+ * So you can show the items outside the wrapper
+ */
+.wrapper--demo {
+  overflow: visible;
+}
+.wrapper--demo:after, .wrapper--demo:before {
+  content: "";
+  position: absolute;
+  width: 480px;
+  height: 100%;
+  top: 0;
+  left: 100%;
+  z-index: 2;
+}
+.wrapper--demo:before {
+  left: -960px;
+}
+
+.carousel {
+  width: 100%;
+  position: relative;
+}
+.carousel .carousel__content {
+  width: auto;
+  position: relative;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transition: translate3d(0, 0, 0);
+}
+.carousel .carousel__content .item {
+  display: block;
+  float: left;
+  width: 100%;
+  position: relative;
+  z-index:-1;
+}
+.carousel .carousel__content .item .title--sub {
+  margin-top: 20px;
+  font-size: 1.2em;
+  opacity: .5;
+}
+.carousel .carousel__nav {
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  margin-top: -17px;
+  left: 0;
+  z-index: 1;
+  cursor:pointer;
+}
+.carousel .carousel__nav .nav {
+  position: absolute;
+  top: 0;
+  color: #000;
+  padding: 8px 12px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 2.8rem;
+  transition: padding .25s ease;
+  	width:50px;
+	height:50px;
+
+	background-repeat:no-repeat;
+	background-position:center center;
+}
+.carousel .carousel__nav .nav:hover {
+  padding: 8px 20px;
+}
+.carousel .carousel__nav .nav--left {
+background-image:url(../img/orbit/previos.png);	
+  border-radius: 0px 3px 3px 0px;
+  margin-left:20%;
+}
+.carousel .carousel__nav .nav--right {
+background-image:url(../img/orbit/next.png);
+  margin-right:20%;
+  right: 0;
+  border-radius: 3px 0px 0px 3px;
+}
+.nav .nav--left,
+.nav .nav--right{
+	width:50px;
+	height:50px;
+	background-image:url(../img/orbit/next.png);
+	background-repeat:no-repeat;
+	background-position:center center;
+}
+.nav .nav--right{
+	background-image:url(../img/orbit/prevois.png);	
+}

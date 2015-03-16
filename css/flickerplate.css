@@ -1,0 +1,228 @@
+.flickerplate{
+	margin:0 auto;
+	position:relative;
+	width:844px;
+	height:429px;
+	border:10px solid #fff;
+	-moz-box-shadow:	0px 0px 30px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 0px 0px 30px rgba(0,0,0,0.4);
+	-o-box-shadow:		0px 0px 30px rgba(0,0,0,0.4);
+    box-shadow:			0px 0px 30px rgba(0,0,0,0.4);
+	background-color:#e6e6e6;
+	overflow:hidden;
+}
+.flickerplate hr{
+	height:1px;
+	width:100%;
+	position:absolute;
+	left:0;
+	bottom:29px;
+	border:0;
+	padding:0;
+	background-color:rgba(21,79,128,0.8);
+	z-index:1;
+}
+.flickerplate ul.flicks{
+	width:10000%;
+	height:100%;
+	padding:0px;
+	margin:0px;
+	list-style:none;
+}
+.flickerplate ul.flicks>li{
+	float:left;
+	width:844px;
+	height:429px;
+	background-position:center center;
+	background-size:cover;
+	display:table;
+}
+.flickerplate ul.flicks>li .flick-inner{
+	float:right;
+	width:46.2%;
+	height:429px;
+	background-color:rgba(255,255,255,0.9);
+	display:table-cell;
+	vertical-align:middle;
+}
+.flickerplate ul.flicks>li:nth-child(1) .flick-inner{
+	background-color:transparent;	
+}
+.flickerplate ul.flicks>li:nth-child(4) .flick-inner{
+	background-color:transparent;	
+}
+.flickerplate ul.flicks>li:nth-child(5) .flick-inner{
+	background-color:transparent;	
+}
+.flickerplate ul.flicks>li:nth-child(3) p,
+.flickerplate ul.flicks>li:nth-child(4) p,
+.flickerplate ul.flicks>li:nth-child(5) p{
+	padding-left:25px;
+}
+.flickerplate ul.flicks>li .flick-inner .flick-content{
+	max-width:68.75em;
+	margin-left:auto;
+	margin-right:auto;
+}
+.flickerplate ul.flicks>li .flick-title{
+	font-family:'CoreSansA45Regular';
+	font-size:28px;
+	color:#000;
+	text-align:center;
+}
+.flickerplate ul.flicks>li .flick-title b{
+	font-family:'CoreSansA45Regular';
+	font-weight:600;
+}
+.flick-title p{
+	position:relative;
+	top:160px;
+}
+@media only screen and (max-width: 43.813em){
+.flickerplate ul.flicks>li .flick-title{
+	font-size:1.667em;
+}
+}
+.flickerplate ul.flicks>li .flick-sub-text{
+	padding:5px;
+	font-weight:300;
+	line-height:2.5em;
+	color:rgba(255,255,255,0.8);
+	text-align:center;
+}
+.flickerplate ul.flicks>li .flick-title span.flick-block-text,.flickerplate ul.flicks>li .flick-sub-text span.flick-block-text{
+	padding:12px 18px;
+	background-color:rgba(0,0,0,0.6);
+}
+/* .flickerplate .arrow-navigation{
+	position:absolute;
+	height:80%;
+	width:10%;
+	top:10%;
+	z-index:100;
+	overflow:hidden;
+} */
+/* .flickerplate .arrow-navigation .arrow{
+	display:none;
+	height:100%;
+	width:90%;
+	-webkit-transition:all 0.2s ease-out;
+	-moz-transition:all 0.2s ease-out;
+	-o-transition:all 0.2s ease-out;
+	-ms-transition:all 0.2s ease-out;
+	transition:all 0.2s ease-out;
+} */
+/* .flickerplate .arrow-navigation:hover,
+.flickerplate .arrow-navigation .arrow:hover{
+	cursor:pointer;
+} */
+/* .flickerplate .arrow-navigation.left{left:0%}
+.flickerplate .arrow-navigation.left .arrow{
+	opacity:0;
+	margin:0px 0px 0px 50%;
+	background-image:url("../img/flickerplate/arrow-left-light.png");
+	background-repeat:no-repeat;
+	background-position:left;
+}
+.flickerplate .arrow-navigation.right{right:0%}
+.flickerplate .arrow-navigation.right .arrow{
+	opacity:0;
+	margin:0px 0px 0px -50%;
+	background-image:url("../img/flickerplate/arrow-right-light.png");
+	background-repeat:no-repeat;background-position:right
+}
+.flickerplate .arrow-navigation.left.hover .arrow{
+	opacity:1;
+	margin:0px 0px 0px 20%;
+}
+.flickerplate .arrow-navigation.right.hover .arrow{
+	opacity:1;
+	margin:0px 0px 0px -20%;
+} */
+.flickerplate .dot-navigation{
+	position:absolute;
+	bottom:15px;
+	width:100%;
+	text-align:center;
+	z-index:100;
+}
+.flickerplate .dot-navigation ul{
+	text-align:center;
+	list-style:none;
+	padding:0px 25px;
+}
+.flickerplate .dot-navigation ul li{
+	display:inline-block;
+	float:none;
+}
+.flickerplate .dot-navigation .dot{
+	width:25px;
+	height:25px;
+	margin:0px 61.8px;
+	border:5px solid #7595b0;
+	background-color:rgba(21,79,128,0.8);
+	border-radius:12.5px;
+	border-radius:50%;
+	-ms-border-radius:50%;
+	-moz-border-radius:50%;
+	-webkit-border-radius:50%;
+	-o-border-radius:50%;
+	-webkit-transition:background-color 0.2s ease-out;
+	-moz-transition:background-color 0.2s ease-out;
+	-o-transition:background-color 0.2s ease-out;
+	-ms-transition:background-color 0.2s ease-out;
+	transition:background-color 0.2s ease-out;
+	cursor:pointer;
+}
+.flickerplate .dot-navigation .dot:hover{
+	background-color:rgba(230,180,15,0.8);
+}
+.flickerplate .dot-navigation .dot.active{
+	position:relative;
+	border:5px solid #f3f008;
+	background-color:rgba(230,180,15,0.8);
+}
+.flickerplate .dot-navigation .dot.active:hover{
+	background-color:rgba(230,180,15,0.8);
+}
+.flickerplate .dot-navigation.left,
+.flickerplate .dot-navigation.left ul{text-align:left}
+.flickerplate .dot-navigation.right,
+.flickerplate .dot-navigation.right ul{text-align:right}
+/* .flickerplate.flicker-theme-dark .arrow-navigation.left .arrow{background-image:url("../img/flickerplate/arrow-left-dark.png")}
+.flickerplate.flicker-theme-dark .arrow-navigation.right .arrow{background-image:url("../img/flickerplate/arrow-right-dark.png")} */
+.flickerplate.flicker-theme-dark .dot-navigation .dot{background-color:rgba(0,0,0,0.12)}
+.flickerplate.flicker-theme-dark .dot-navigation .dot:hover{background-color:rgba(0,0,0,0.6)}
+.flickerplate.flicker-theme-dark .dot-navigation .dot.active{background-color:#000}
+.flickerplate.flicker-theme-dark ul.flicks li .flick-inner{color:rgba(0,0,0,0.9)}
+.flickerplate.flicker-theme-dark ul.flicks li .flick-inner .flick-content .flick-sub-text{
+	font-family:'Museo Sans Cyrl 300';
+	font-size:24px;
+	color:rgba(20,42,64,0.9);
+}
+.flickerplate.flicker-theme-dark ul.flicks li .flick-inner .flick-content .flick-title span.flick-block-text,.flickerplate.flicker-theme-dark ul.flicks li .flick-inner .flick-content .flick-sub-text span.flick-block-text{background-color:rgba(255,255,255,0.5)}
+.flickerplate ul.flicks li.flick-theme-dark .flick-inner{color:rgba(0,0,0,0.9)}
+.flickerplate ul.flicks li.flick-theme-dark .flick-inner .flick-content .flick-sub-text{color:rgba(0,0,0,0.9)}
+.flickerplate ul.flicks li.flick-theme-dark .flick-inner .flick-content .flick-title span.flick-block-text,.flickerplate ul.flicks li.flick-theme-dark .flick-inner .flick-content .flick-sub-text span.flick-block-text{background-color:rgba(255,255,255,0.5)}
+.flickerplate.animate-transform-slide ul.flicks{
+	-webkit-perspective:1000;
+	-webkit-backface-visibility:hidden;
+	transform:translate3d(0%, 0px, 0px);
+	-webkit-transform:translate3d(0%, 0px, 0px);
+	-webkit-transition:-webkit-transform 0.6s;
+	-o-transition:-o-transform 0.6s;
+	-moz-transition:-moz-transform 0.6s;
+	transition:transform 0.6s;
+}
+.flickerplate.animate-transition-slide ul.flicks{
+	position:relative;
+	left:0%;
+	-webkit-transition:left 0.6s ease-out;
+	-moz-transition:left 0.6s ease-out;
+	-o-transition:left 0.6s ease-out;
+	-ms-transition:left 0.6s ease-out;
+	transition:left 0.6s ease-out;
+}
+.flickerplate.animate-jquery-slide ul.flicks{position:relative;left:0%}
+.flickerplate.animate-scroller-slide{padding-bottom:0px;overflow:auto}
+.flickerplate.animate-scroller-slide ul.flicks{position:auto}

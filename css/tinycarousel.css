@@ -1,0 +1,38 @@
+/* Tiny Carousel */
+#slider1 { height: 20%; width:90%; overflow:hidden; margin:0 auto; margin-top:2%; padding: 0 0 10px;   }
+#slider1 .viewport { float: left; margin-left:0.5%; width: 81%; height: 100%; overflow: hidden; position: relative; }
+#slider1 .buttons {
+    display: block;
+    margin: 20px 0px 0 0;
+    float: left;
+	width:45px;
+	height:50px;
+    position: relative;
+    text-decoration: none;
+}
+#slider1 .buttons {
+	-webkit-transition:0s !important;
+	-moz-transition:0s !important;
+	-o-transition:0s !important;
+	transition:0s !important;
+}
+#slider1 .buttons.next{
+	background:url(../img/png/arrow.png) -52px 0;
+}
+#slider1 .buttons.prev{
+	background:url(../img/png/arrow.png) 0px 0;
+}
+
+#slider1 .buttons.next:hover{
+	background:url(../img/png/arrow.png) -52px 52px;
+}
+#slider1 .buttons.prev:hover{
+	background:url(../img/png/arrow.png) -0px 52px;
+}
+#slider1 .disable { visibility: hidden; }
+#slider1 .overview { list-style: none; position: absolute; padding: 0; margin: 0; width: 170px; left: 0 top: 0; }
+#slider1 .overview li{ float: left; margin: 0 16.5px 0 0; padding: 1px; height: 90px; border: 1px solid #dcdcdc; width: 130px;}
+#slider1 .overview li img{
+	width:130px;
+	height:90px;
+}
