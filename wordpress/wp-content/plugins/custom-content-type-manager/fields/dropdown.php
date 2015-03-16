@@ -304,7 +304,7 @@ class CCTM_dropdown extends CCTM_FormElement
 		$hash['option_cnt']  = $option_cnt;
 		$hash['delete']   = __('Delete');
 		$hash['options']   = __('Options', CCTM_TXTDOMAIN);
-		$hash['values']   = __('Stored Values', CCTM_TXTDOMAIN);
+		$hash['values']   = __('Stored Values (put here post ID of radio)', CCTM_TXTDOMAIN);
 		$hash['add_option']  = __('Add Option', CCTM_TXTDOMAIN);
 		$hash['set_as_default'] = __('Set as Default', CCTM_TXTDOMAIN);
 

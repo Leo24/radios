@@ -77,7 +77,7 @@ class CCTM_multiselect extends CCTM_FormElement
 	 *
 	 * This is hands-down the most complex field due to the way we have to do 
 	 * literal comparisions of foreign comparisons.  Whereas the other fields 
-	 * are fine if we store a "&agrave;" or "ˆ" so long as it displays correctly,
+	 * are fine if we store a "&agrave;" or "ï¿½" so long as it displays correctly,
 	 * the multiselect fields must get the $current_value to be EXACTLY equal
 	 * to the available options, otherwise we won't know whether or not 
 	 * to check the checkbox.
@@ -296,7 +296,7 @@ class CCTM_multiselect extends CCTM_FormElement
 		$hash['option_cnt'] 	= $option_cnt;
 		$hash['delete'] 		= __('Delete');
 		$hash['options'] 		= __('Options', CCTM_TXTDOMAIN);
-		$hash['values']			= __('Stored Values', CCTM_TXTDOMAIN);
+		$hash['values']			= __('Stored Values (put here post ID of radio)', CCTM_TXTDOMAIN);
 		$hash['add_option'] 	= __('Add Option',CCTM_TXTDOMAIN);
 		$hash['set_as_default'] = __('Set as Default', CCTM_TXTDOMAIN);		
 		

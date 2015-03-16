@@ -329,3 +329,43 @@ require get_template_directory() . '/inc/template-tags.php';
  * @since Twenty Fifteen 1.0
  */
 require get_template_directory() . '/inc/customizer.php';
+
+
+
+add_action("wp_ajax_get_list_radios_accessories", "get_list_radios_accessories");
+add_action('wp_ajax_nopriv_get_list_radios_accessories', 'my_action_get_list_radios_accessories');
+
+function get_list_radios_accessories(){
+$argsRadios = array(
+	'numberposts'	   =>'0',
+	'post_type'        => 'radios',
+	'post_status'      => 'publish',
+);
+$radios = get_posts( $argsRadios );
+	$argsAccessories = array(
+		'numberposts'	   =>'0',
+		'post_type'        => 'accessories',
+		'post_status'      => 'publish',
+	);
+	$accessories = get_posts( $argsAccessories );
+	$accessory_list = [];
+	foreach($accessories as $key => $accessory){
+		$accessory_meta = get_post_meta( $accessory->ID);
+		$accessory_meta['accessory_ID'] = $accessory->ID;
+		$accessory_meta['accessory_name'] = $accessory->post_title;
+		$accessory_list[$key] = $accessory_meta;
+	}
+	$products = ['radios'=>$radios, 'accessories'=>$accessories];
+	$radioWithAccessories = [];
+	$radioAccessories = [];
+	foreach($radios as $radio){
+		foreach($accessory_list as $key => $accessory){
+			if (strpos($accessory['radio_model'][0], (string)$radio->ID) !== false) {
+				$radioAccessories[$key] = $accessory;
+			}
+		}
+		$radioWithAccessories[$radio->post_title.' RadioID:'.$radio->ID] = $radioAccessories;
+	}
+	echo json_encode($radioWithAccessories);
+	die();
+}
