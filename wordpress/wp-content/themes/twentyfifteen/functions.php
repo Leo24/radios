@@ -42,82 +42,82 @@ if ( version_compare( $GLOBALS['wp_version'], '4.1-alpha', '<' ) ) {
 }
 
 if ( ! function_exists( 'twentyfifteen_setup' ) ) :
-/**
- * Sets up theme defaults and registers support for various WordPress features.
- *
- * Note that this function is hooked into the after_setup_theme hook, which
- * runs before the init hook. The init hook is too late for some features, such
- * as indicating support for post thumbnails.
- *
- * @since Twenty Fifteen 1.0
- */
-function twentyfifteen_setup() {
-
-	/*
-	 * Make theme available for translation.
-	 * Translations can be filed in the /languages/ directory.
-	 * If you're building a theme based on twentyfifteen, use a find and replace
-	 * to change 'twentyfifteen' to the name of your theme in all the template files
-	 */
-	load_theme_textdomain( 'twentyfifteen', get_template_directory() . '/languages' );
-
-	// Add default posts and comments RSS feed links to head.
-	add_theme_support( 'automatic-feed-links' );
-
-	/*
-	 * Let WordPress manage the document title.
-	 * By adding theme support, we declare that this theme does not use a
-	 * hard-coded <title> tag in the document head, and expect WordPress to
-	 * provide it for us.
-	 */
-	add_theme_support( 'title-tag' );
-
-	/*
-	 * Enable support for Post Thumbnails on posts and pages.
+	/**
+	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
-	 * See: https://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
-	 */
-	add_theme_support( 'post-thumbnails' );
-	set_post_thumbnail_size( 825, 510, true );
-
-	// This theme uses wp_nav_menu() in two locations.
-	register_nav_menus( array(
-		'primary' => __( 'Primary Menu',      'twentyfifteen' ),
-		'social'  => __( 'Social Links Menu', 'twentyfifteen' ),
-	) );
-
-	/*
-	 * Switch default core markup for search form, comment form, and comments
-	 * to output valid HTML5.
-	 */
-	add_theme_support( 'html5', array(
-		'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
-	) );
-
-	/*
-	 * Enable support for Post Formats.
+	 * Note that this function is hooked into the after_setup_theme hook, which
+	 * runs before the init hook. The init hook is too late for some features, such
+	 * as indicating support for post thumbnails.
 	 *
-	 * See: https://codex.wordpress.org/Post_Formats
+	 * @since Twenty Fifteen 1.0
 	 */
-	add_theme_support( 'post-formats', array(
-		'aside', 'image', 'video', 'quote', 'link', 'gallery', 'status', 'audio', 'chat'
-	) );
+	function twentyfifteen_setup() {
 
-	$color_scheme  = twentyfifteen_get_color_scheme();
-	$default_color = trim( $color_scheme[0], '#' );
+		/*
+         * Make theme available for translation.
+         * Translations can be filed in the /languages/ directory.
+         * If you're building a theme based on twentyfifteen, use a find and replace
+         * to change 'twentyfifteen' to the name of your theme in all the template files
+         */
+		load_theme_textdomain( 'twentyfifteen', get_template_directory() . '/languages' );
 
-	// Setup the WordPress core custom background feature.
-	add_theme_support( 'custom-background', apply_filters( 'twentyfifteen_custom_background_args', array(
-		'default-color'      => $default_color,
-		'default-attachment' => 'fixed',
-	) ) );
+		// Add default posts and comments RSS feed links to head.
+		add_theme_support( 'automatic-feed-links' );
 
-	/*
-	 * This theme styles the visual editor to resemble the theme style,
-	 * specifically font, colors, icons, and column width.
-	 */
-	add_editor_style( array( 'css/editor-style.css', 'genericons/genericons.css', twentyfifteen_fonts_url() ) );
-}
+		/*
+         * Let WordPress manage the document title.
+         * By adding theme support, we declare that this theme does not use a
+         * hard-coded <title> tag in the document head, and expect WordPress to
+         * provide it for us.
+         */
+		add_theme_support( 'title-tag' );
+
+		/*
+         * Enable support for Post Thumbnails on posts and pages.
+         *
+         * See: https://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
+         */
+		add_theme_support( 'post-thumbnails' );
+		set_post_thumbnail_size( 825, 510, true );
+
+		// This theme uses wp_nav_menu() in two locations.
+		register_nav_menus( array(
+			'primary' => __( 'Primary Menu',      'twentyfifteen' ),
+			'social'  => __( 'Social Links Menu', 'twentyfifteen' ),
+		) );
+
+		/*
+         * Switch default core markup for search form, comment form, and comments
+         * to output valid HTML5.
+         */
+		add_theme_support( 'html5', array(
+			'search-form', 'comment-form', 'comment-list', 'gallery', 'caption'
+		) );
+
+		/*
+         * Enable support for Post Formats.
+         *
+         * See: https://codex.wordpress.org/Post_Formats
+         */
+		add_theme_support( 'post-formats', array(
+			'aside', 'image', 'video', 'quote', 'link', 'gallery', 'status', 'audio', 'chat'
+		) );
+
+		$color_scheme  = twentyfifteen_get_color_scheme();
+		$default_color = trim( $color_scheme[0], '#' );
+
+		// Setup the WordPress core custom background feature.
+		add_theme_support( 'custom-background', apply_filters( 'twentyfifteen_custom_background_args', array(
+			'default-color'      => $default_color,
+			'default-attachment' => 'fixed',
+		) ) );
+
+		/*
+         * This theme styles the visual editor to resemble the theme style,
+         * specifically font, colors, icons, and column width.
+         */
+		add_editor_style( array( 'css/editor-style.css', 'genericons/genericons.css', twentyfifteen_fonts_url() ) );
+	}
 endif; // twentyfifteen_setup
 add_action( 'after_setup_theme', 'twentyfifteen_setup' );
 
@@ -142,55 +142,55 @@ function twentyfifteen_widgets_init() {
 add_action( 'widgets_init', 'twentyfifteen_widgets_init' );
 
 if ( ! function_exists( 'twentyfifteen_fonts_url' ) ) :
-/**
- * Register Google fonts for Twenty Fifteen.
- *
- * @since Twenty Fifteen 1.0
- *
- * @return string Google fonts URL for the theme.
- */
-function twentyfifteen_fonts_url() {
-	$fonts_url = '';
-	$fonts     = array();
-	$subsets   = 'latin,latin-ext';
+	/**
+	 * Register Google fonts for Twenty Fifteen.
+	 *
+	 * @since Twenty Fifteen 1.0
+	 *
+	 * @return string Google fonts URL for the theme.
+	 */
+	function twentyfifteen_fonts_url() {
+		$fonts_url = '';
+		$fonts     = array();
+		$subsets   = 'latin,latin-ext';
 
-	/* translators: If there are characters in your language that are not supported by Noto Sans, translate this to 'off'. Do not translate into your own language. */
-	if ( 'off' !== _x( 'on', 'Noto Sans font: on or off', 'twentyfifteen' ) ) {
-		$fonts[] = 'Noto Sans:400italic,700italic,400,700';
+		/* translators: If there are characters in your language that are not supported by Noto Sans, translate this to 'off'. Do not translate into your own language. */
+		if ( 'off' !== _x( 'on', 'Noto Sans font: on or off', 'twentyfifteen' ) ) {
+			$fonts[] = 'Noto Sans:400italic,700italic,400,700';
+		}
+
+		/* translators: If there are characters in your language that are not supported by Noto Serif, translate this to 'off'. Do not translate into your own language. */
+		if ( 'off' !== _x( 'on', 'Noto Serif font: on or off', 'twentyfifteen' ) ) {
+			$fonts[] = 'Noto Serif:400italic,700italic,400,700';
+		}
+
+		/* translators: If there are characters in your language that are not supported by Inconsolata, translate this to 'off'. Do not translate into your own language. */
+		if ( 'off' !== _x( 'on', 'Inconsolata font: on or off', 'twentyfifteen' ) ) {
+			$fonts[] = 'Inconsolata:400,700';
+		}
+
+		/* translators: To add an additional character subset specific to your language, translate this to 'greek', 'cyrillic', 'devanagari' or 'vietnamese'. Do not translate into your own language. */
+		$subset = _x( 'no-subset', 'Add new subset (greek, cyrillic, devanagari, vietnamese)', 'twentyfifteen' );
+
+		if ( 'cyrillic' == $subset ) {
+			$subsets .= ',cyrillic,cyrillic-ext';
+		} elseif ( 'greek' == $subset ) {
+			$subsets .= ',greek,greek-ext';
+		} elseif ( 'devanagari' == $subset ) {
+			$subsets .= ',devanagari';
+		} elseif ( 'vietnamese' == $subset ) {
+			$subsets .= ',vietnamese';
+		}
+
+		if ( $fonts ) {
+			$fonts_url = add_query_arg( array(
+				'family' => urlencode( implode( '|', $fonts ) ),
+				'subset' => urlencode( $subsets ),
+			), '//fonts.googleapis.com/css' );
+		}
+
+		return $fonts_url;
 	}
-
-	/* translators: If there are characters in your language that are not supported by Noto Serif, translate this to 'off'. Do not translate into your own language. */
-	if ( 'off' !== _x( 'on', 'Noto Serif font: on or off', 'twentyfifteen' ) ) {
-		$fonts[] = 'Noto Serif:400italic,700italic,400,700';
-	}
-
-	/* translators: If there are characters in your language that are not supported by Inconsolata, translate this to 'off'. Do not translate into your own language. */
-	if ( 'off' !== _x( 'on', 'Inconsolata font: on or off', 'twentyfifteen' ) ) {
-		$fonts[] = 'Inconsolata:400,700';
-	}
-
-	/* translators: To add an additional character subset specific to your language, translate this to 'greek', 'cyrillic', 'devanagari' or 'vietnamese'. Do not translate into your own language. */
-	$subset = _x( 'no-subset', 'Add new subset (greek, cyrillic, devanagari, vietnamese)', 'twentyfifteen' );
-
-	if ( 'cyrillic' == $subset ) {
-		$subsets .= ',cyrillic,cyrillic-ext';
-	} elseif ( 'greek' == $subset ) {
-		$subsets .= ',greek,greek-ext';
-	} elseif ( 'devanagari' == $subset ) {
-		$subsets .= ',devanagari';
-	} elseif ( 'vietnamese' == $subset ) {
-		$subsets .= ',vietnamese';
-	}
-
-	if ( $fonts ) {
-		$fonts_url = add_query_arg( array(
-			'family' => urlencode( implode( '|', $fonts ) ),
-			'subset' => urlencode( $subsets ),
-		), '//fonts.googleapis.com/css' );
-	}
-
-	return $fonts_url;
-}
 endif;
 
 /**
@@ -336,14 +336,29 @@ add_action("wp_ajax_get_list_radios_accessories", "get_list_radios_accessories")
 add_action('wp_ajax_nopriv_get_list_radios_accessories', 'my_action_get_list_radios_accessories');
 
 function get_list_radios_accessories(){
-$argsRadios = array(
-	'numberposts'	   =>'0',
-	'post_type'        => 'radios',
-	'post_status'      => 'publish',
-);
-$radios = get_posts( $argsRadios );
+	$argsRadios = array(
+		'numberposts'	   =>'0',
+		'post_type'        => 'radios',
+		'post_status'      => 'publish',
+	);
+	$radios = get_posts( $argsRadios );
+	$prices = [];
+	foreach ($radios as $key => $radio){
+		$radio_meta = get_post_meta($radio->ID);
+		$radio_image = wp_get_attachment_metadata( $radio_meta['radio_image'][0] );
+		$upload_dir = wp_upload_dir();
+		$radio->radio_img = $upload_dir['baseurl'].'/'.$radio_image['file'];
+		foreach ($radio_meta as $key1 => $value){
+			if (false !== strpos($key1, 'price' )){
+				$prices[$key1] = $value;
+			}
+		}
+		$radios[$key]->prices = $prices;
+	}
+
 	$argsAccessories = array(
 		'numberposts'	   =>'0',
+		'post_type'=>'attachment',
 		'post_type'        => 'accessories',
 		'post_status'      => 'publish',
 	);
@@ -353,10 +368,13 @@ $radios = get_posts( $argsRadios );
 		$accessory_meta = get_post_meta( $accessory->ID);
 		$accessory_meta['accessory_ID'] = $accessory->ID;
 		$accessory_meta['accessory_name'] = $accessory->post_title;
+		$accessory_image = wp_get_attachment_metadata( $accessory_meta['accessory_image'][0] );
+		$upload_dir = wp_upload_dir();
+		$accessory_meta['accessory_image'] = $upload_dir['baseurl'].'/'.$accessory_image['file'];
 		$accessory_list[$key] = $accessory_meta;
 	}
-	$products = ['radios'=>$radios, 'accessories'=>$accessories];
 	$radioWithAccessories = [];
+	$listOfRadios = [];
 	$radioAccessories = [];
 	foreach($radios as $radio){
 		foreach($accessory_list as $key => $accessory){
@@ -364,8 +382,13 @@ $radios = get_posts( $argsRadios );
 				$radioAccessories[$key] = $accessory;
 			}
 		}
-		$radioWithAccessories[$radio->post_title.' RadioID:'.$radio->ID] = $radioAccessories;
+		$radioWithAccessories['radio_model'] = $radio->post_title;
+		$radioWithAccessories['radioID'] = $radio->ID;
+		$radioWithAccessories['prices'] = $radio->prices;
+		$radioWithAccessories['radio_img'] = $radio->radio_img;
+		$radioWithAccessories['compatible_acessories'] = $radioAccessories;
+		$listOfRadios[] = $radioWithAccessories;
 	}
-	echo json_encode($radioWithAccessories);
+	echo json_encode($listOfRadios);
 	die();
 }
