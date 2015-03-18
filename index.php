@@ -176,7 +176,7 @@
 		<h1><img class="wow pulse animated" data-wow-iteration="8" data-wow-offset="300" src="img/icon-m3-tittle.png" alt="icon-m3-tittle"> Модели, <text>которые никогда не подводят</text><br /><b>по акционным ценам</b></h1>
 	</div>
 	<div class="ccc">
-		<div class="container one">
+		<div class="container one c0">
 			<div class="content">
 				<img class="big" id="img1" src="img/prod1.png" alt="img1">
 				<img class="big" id="img4" src="img/prod1.png" alt="img4">
@@ -184,71 +184,71 @@
 				<p class="price"><span style="color:red; text-decoration:line-through;"><span style="color:white;">1476</span></span><text>&nbsp;&nbsp;<b>1377</b>грн.</text></p>
 				<div class="count">
 					<script type="application/javascript">
-					
-							if(getCookie('kool')==null){
-							 setCookie('kool', dat.toString());		 
-						} else{
-							dat=new Date(getCookie('kool'));	
-						}
-						
-							   function countdownComplete(){
-							function deleteCookie(name) {
-						var date = new Date(); // Берём текущую дату
-						date.setTime(date.getTime() - 1); // Возвращаемся в "прошлое"
-						document.cookie = name += "=; expires=" + date.toGMTString(); // Устанавливаем cookie пустое значение и срок действия до прошедшего уже времени
-					  }	   	
-							deleteCookie("kool");
-							deleteCookie("visiteduuid");
-							location.reload();	
-						 }
 
-						var CountdownLabels = {
-						second 	: "Секунд",
-						minute 	: "Минут",
-						hour	: "Часов",
-						day 	: "Дней",
-					};	  
-					var myCountdown1 = new Countdown({
-														time: dat, // 86400 seconds = 1 day  надо, чтобы прошло 3дня, потом таймер обнуляется, пишется "Акция продлена" и опять шел отчет на 3 дня.
-														width: 220, 
-														height: 50, 
-														padding  : 0.0,  
-														rangeHi:"day",
-														style:"flip",
-														onComplete	: countdownComplete,
-								
-							}
-														);
+//							if(getCookie('kool')==null){
+//							 setCookie('kool', dat.toString());
+//						} else{
+//							dat=new Date(getCookie('kool'));
+//						}
+//
+//							   function countdownComplete(){
+//							function deleteCookie(name) {
+//						var date = new Date(); // Берём текущую дату
+//						date.setTime(date.getTime() - 1); // Возвращаемся в "прошлое"
+//						document.cookie = name += "=; expires=" + date.toGMTString(); // Устанавливаем cookie пустое значение и срок действия до прошедшего уже времени
+//					  }
+//							deleteCookie("kool");
+//							deleteCookie("visiteduuid");
+//							location.reload();
+//						 }
+//
+//						var CountdownLabels = {
+//						second 	: "Секунд",
+//						minute 	: "Минут",
+//						hour	: "Часов",
+//						day 	: "Дней",
+//					};
+//					var myCountdown1 = new Countdown({
+//														time: dat, // 86400 seconds = 1 day  надо, чтобы прошло 3дня, потом таймер обнуляется, пишется "Акция продлена" и опять шел отчет на 3 дня.
+//														width: 220,
+//														height: 50,
+//														padding  : 0.0,
+//														rangeHi:"day",
+//														style:"flip",
+//														onComplete	: countdownComplete,
+//
+//							}
+//														);
 
 					</script>
 				</div>
 				<p class="btns del"><a href="#win-zak-1"><input class="button del" type="button" value=""/></a></p>
-				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>
+<!--				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>-->
 			</div>
 		</div>
-		<div class="container two" onmouseover="$('#img4').style('display':'none');">
+		<div class="container two c1" onmouseover="$('#img4').style('display':'none');">
 			<div class="content">
 				<img class="big" id="img2" src="img/prod2.png" alt="img2">
 				<h2>Рация <text>Kenwood TK-F8 DB</text></h2>
 				<p class="price"><span style="color:red; text-decoration:line-through;"><span style="color:white;">1476</span></span><text>&nbsp;&nbsp;<b>1377</b>грн.</text></p>
 				<div class="count">
 					<script type="application/javascript">
-					
+
 							if(getCookie('kool')==null){
-							 setCookie('kool', dat.toString());		 
+							 setCookie('kool', dat.toString());
 						} else{
-							dat=new Date(getCookie('kool'));	
+							dat=new Date(getCookie('kool'));
 						}
-						
+
 							   function countdownComplete(){
 							function deleteCookie(name) {
 						var date = new Date(); // Берём текущую дату
 						date.setTime(date.getTime() - 1); // Возвращаемся в "прошлое"
 						document.cookie = name += "=; expires=" + date.toGMTString(); // Устанавливаем cookie пустое значение и срок действия до прошедшего уже времени
-					  }	   	
+					  }
 							deleteCookie("kool");
 							deleteCookie("visiteduuid");
-							location.reload();	
+							location.reload();
 						 }
 
 						var CountdownLabels = {
@@ -256,26 +256,26 @@
 						minute 	: "Минут",
 						hour	: "Часов",
 						day 	: "Дней",
-					};	  
+					};
 					var myCountdown1 = new Countdown({
 														time: dat, // 86400 seconds = 1 day  надо, чтобы прошло 3дня, потом таймер обнуляется, пишется "Акция продлена" и опять шел отчет на 3 дня.
-														width: 220, 
-														height: 50, 
-														padding  : 0.0,  
+														width: 220,
+														height: 50,
+														padding  : 0.0,
 														rangeHi:"day",
 														style:"flip",
 														onComplete	: countdownComplete,
-								
+
 							}
 														);
 
 					</script>
 				</div>
 				<p class="btns del"><a href="#win-zak-2"><input class="button del" type="button" value=""/></a></p>
-				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>
+<!--				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>-->
 			</div>
 		</div>
-		<div class="container three">
+		<div class="container three c2">
 			<div class="content">
 				<img class="big" id="img3" src="img/prod3.png" alt="img3">
 				<h2>Рация <text>Baofeng BF-888S</text></h2>
@@ -321,7 +321,7 @@
 					</script>
 				</div>
 				<p class="btns del"><a href="#win-zak-3"><input class="button del" type="button" value=""/></a></p>
-				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>
+<!--				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>-->
 			</div>
 		</div>
 		<div class="container four"></div>
@@ -656,150 +656,8 @@
 
 		<a href="#x" class="overlay" id="win-zak"></a>
 	<div class="popup zak">
-		<h1><img src="img/png/cart.png" alt="cart">&nbsp; Оформление заказа</h1>
-		<div class="container">
-		<!--Рация Kenwood TK-F8 DB-->
-			<ul>
-				<li>
-					<img src="img/png/image1.png" alt="image1">
-				</li>
-				
-				<li>
-					<p class="text title">Название и модель рации</p>
-					<hr class="hr-title">
-					<p class="text main">Kenwood TK-F8 DB</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Цена</p>
-					<hr class="hr-title">
-					<p class="text main">1377</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Кол-во</p>
-					<hr class="hr-title">
-					<input class="text main kol-vo" id="prod1" value="1" defval="1" type="text"/>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title" style="opacity:0;">Удалить</p>
-					<hr class="hr-title">
-						<input class="delete" type="button" value="удалить" onclick=""/>
-					<hr class="hr-main">
-				</li>
-			</ul>
-		<!--Рация Рация Baofeng UV-5R-->
-			<ul>
-				<li>
-					<img src="img/png/image_2.png" alt="image_2">
-				</li>
-				
-				<li>
-					<p class="text title">Название и модель рации</p>
-					<hr class="hr-title">
-					<p class="text main">Baofeng UV-5R</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Цена</p>
-					<hr class="hr-title">
-					<p class="text main">1377</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Кол-во</p>
-					<hr class="hr-title">
-					<input class="text main kol-vo" id="prod1" value="1" defval="1" type="text"/>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title" style="opacity:0;">Удалить</p>
-					<hr class="hr-title">
-						<input class="delete" type="button" value="удалить" onclick=""/>
-					<hr class="hr-main">
-				</li>
-			</ul>
-		<!--Рация Рация Baofeng BF-888S-->
-			<ul>
-				<li>
-					<img src="img/png/image_3.png" alt="image_3">
-				</li>
-				
-				<li>
-					<p class="text title">Название и модель рации</p>
-					<hr class="hr-title">
-					<p class="text main">Baofeng BF-888S</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Цена</p>
-					<hr class="hr-title">
-					<p class="text main">1377</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Кол-во</p>
-					<hr class="hr-title">
-					<input class="text main kol-vo" id="prod1" value="1" defval="1" type="text"/>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title" style="opacity:0;">Удалить</p>
-					<hr class="hr-title">
-						<input class="delete" type="button" value="удалить" onclick=""/>
-					<hr class="hr-main">
-				</li>
-			</ul>
-		</div>
-		<p class="text title all">ИТОГО:</p>
-		<p class="text title all-price">1377</p>
-		<hr class="hr-main bottom">
-		
-		<h2>Выбирите аксессуар</h2>
 
-		<link rel="stylesheet" href="css/tinycarousel.css" type="text/css" media="screen"/>
 
-		<script type="text/javascript" src="js/jquery.tinycarousel.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function()
-			{
-				$('#slider1').tinycarousel();
-			});
-		</script>
-		
-		<div id="slider1">
-			<a class="buttons prev" href="#"></a>
-			<div class="viewport">
-				<ul class="overview">
-					<li><img src="img/IMG1.jpg" /></li>
-					<li><img src="img/IMG2.jpg" /></li>
-					<li><img src="img/IMG3.jpg" /></li>
-					<li><img src="img/IMG4.jpg" /></li>
-					<li><img src="img/IMG5.jpg" /></li>
-					<li><img src="img/IMG6.jpg" /></li>
-					<li><img src="img/IMG7.jpg" /></li>
-					<li><img src="img/IMG8.jpg" /></li>
-					<li><img src="img/IMG9.jpg" /></li>
-					<li><img src="img/IMG10.jpg" /></li>
-				</ul>
-			</div>
-			<a class="buttons next" href="#"></a>
-		</div>
-		<div class="container center">
-			<a class="continue" href="#close">Продолжить покупки</a>
-			<a class="continue order" href="#win6">Оформить</a>
-		</div>
-		<a class="close" title="Закрыть" href="#close"></a>
 	</div>
 
 		<a href="#x" class="overlay" id="win-zak-1"></a>
