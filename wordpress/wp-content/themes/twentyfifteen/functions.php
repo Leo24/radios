@@ -332,10 +332,10 @@ require get_template_directory() . '/inc/customizer.php';
 
 
 
-add_action("wp_ajax_get_list_radios_accessories", "get_list_radios_accessories");
-add_action('wp_ajax_nopriv_get_list_radios_accessories', 'my_action_get_list_radios_accessories');
+add_action("wp_ajax_get_list_radios", "get_list_radios");
+add_action("wp_ajax_nopriv_get_list_radios", "get_list_radios");
 
-function get_list_radios_accessories(){
+function get_list_radios(){
 	$argsRadios = array(
 		'numberposts'	   =>'0',
 		'post_type'        => 'radios',
@@ -355,7 +355,14 @@ function get_list_radios_accessories(){
 		}
 		$radios[$key]->prices = $prices;
 	}
+	echo json_encode($radios);
+	die();
+}
 
+add_action("wp_ajax_get_list_radio_accessories", "get_list_radio_accessories");
+add_action("wp_ajax_nopriv_get_list_radio_accessories", "get_list_radio_accessories");
+
+function get_list_radio_accessories(){
 	$argsAccessories = array(
 		'numberposts'	   =>'0',
 		'post_type'=>'attachment',
@@ -373,22 +380,11 @@ function get_list_radios_accessories(){
 		$accessory_meta['accessory_image'] = $upload_dir['baseurl'].'/'.$accessory_image['file'];
 		$accessory_list[$key] = $accessory_meta;
 	}
-	$radioWithAccessories = [];
-	$listOfRadios = [];
-	$radioAccessories = [];
-	foreach($radios as $radio){
-		foreach($accessory_list as $key => $accessory){
-			if (strpos($accessory['radio_model'][0], (string)$radio->ID) !== false) {
-				$radioAccessories[$key] = $accessory;
-			}
+	foreach($accessory_list as $key => $accessory){
+		if (strpos($accessory['radio_model'][0], $_POST['radioID']) !== false) {
+			$radioAccessories[$key] = $accessory;
 		}
-		$radioWithAccessories['radio_model'] = $radio->post_title;
-		$radioWithAccessories['radioID'] = $radio->ID;
-		$radioWithAccessories['prices'] = $radio->prices;
-		$radioWithAccessories['radio_img'] = $radio->radio_img;
-		$radioWithAccessories['compatible_acessories'] = $radioAccessories;
-		$listOfRadios[] = $radioWithAccessories;
 	}
-	echo json_encode($listOfRadios);
+	echo json_encode($radioAccessories);
 	die();
 }

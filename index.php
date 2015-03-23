@@ -11,8 +11,10 @@
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<link rel="stylesheet" href="css/animate.css" type="text/css">
+    <link rel="stylesheet" href="css/tinycarousel.css" type="text/css" media="screen">
 
-		<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
+
+	<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<script type="text/javascript" src="./js/CreateHTML5Elements.js"></script>
 		<script type="text/javascript" src="./js/cssParser.js"></script>
@@ -178,9 +180,9 @@
 	<div class="ccc">
 		<div class="container one c0">
 			<div class="content">
-				<img class="big" id="img1" src="img/prod1.png" alt="img1">
+				<img class="big" id="img1" src="" alt="img1">
 				<img class="big" id="img4" src="img/prod1.png" alt="img4">
-				<h2>Рация <text>Baofeng UV-5R</text></h2>
+				<h2><text></text></h2>
 				<p class="price"><span style="color:red; text-decoration:line-through;"><span style="color:white;">1476</span></span><text>&nbsp;&nbsp;<b>1377</b>грн.</text></p>
 				<div class="count">
 					<script type="application/javascript">
@@ -228,8 +230,8 @@
 		</div>
 		<div class="container two c1" onmouseover="$('#img4').style('display':'none');">
 			<div class="content">
-				<img class="big" id="img2" src="img/prod2.png" alt="img2">
-				<h2>Рация <text>Kenwood TK-F8 DB</text></h2>
+				<img class="big" id="img2" src="" alt="img2">
+				<h2><text></text></h2>
 				<p class="price"><span style="color:red; text-decoration:line-through;"><span style="color:white;">1476</span></span><text>&nbsp;&nbsp;<b>1377</b>грн.</text></p>
 				<div class="count">
 					<script type="application/javascript">
@@ -277,8 +279,8 @@
 		</div>
 		<div class="container three c2">
 			<div class="content">
-				<img class="big" id="img3" src="img/prod3.png" alt="img3">
-				<h2>Рация <text>Baofeng BF-888S</text></h2>
+				<img class="big" id="img3" src="" alt="img3">
+				<h2><text></text></h2>
 				<p class="price"><span style="color:red; text-decoration:line-through;"><span style="color:white;">1476</span></span><text>&nbsp;&nbsp;<b>1377</b>грн.</text></p>
 				<div class="count">
 					<script type="application/javascript">
@@ -655,7 +657,7 @@
 <!-- MODAL -->
 
 		<a href="#x" class="overlay" id="win-zak"></a>
-	<div class="popup zak">
+	<div class="popup zak basket">
 
 
 	</div>
