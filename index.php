@@ -652,13 +652,12 @@
 	</div><!--end f_content-->
 </footer><!--end footer--> 
 
-<a href="#win-zak" class="cart"></a>
+<a href="#" class="cart"></a>
 
 <!-- MODAL -->
 
 		<a href="#x" class="overlay" id="win-zak"></a>
 	<div class="popup zak basket">
-
 
 	</div>
 

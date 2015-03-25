@@ -11,6 +11,7 @@
 	
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 	<link rel="stylesheet" href="css/animate.css" type="text/css">
+	<link rel="stylesheet" href="css/tinycarousel.css" type="text/css" media="screen">
 
 		<!--[if IE]><script type="text/javascript" src="../excanvas.js"></script><![endif]-->
  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,8 +22,10 @@
 <!-- 		<script type="text/javascript" src="./js/modal.js"></script> -->
 		<script type="text/javascript" src="./js/example.js"></script>
 		<script type="text/javascript" src="js/countdown.js"></script>
-		
-		<script src="js/wow.min.js"></script>
+		<script type="text/javascript" src="js/radios.js"></script>
+
+
+	<script src="js/wow.min.js"></script>
 		<script>
 			new WOW().init();
 		</script>
@@ -641,151 +644,8 @@
 <!-- MODAL -->
 
 		<a href="#x" class="overlay" id="win-zak"></a>
-	<div class="popup zak">
-		<h1><img src="img/png/cart.png" alt="cart">&nbsp; Оформление заказа</h1>
-		<div class="container">
-		<!--Рация Kenwood TK-F8 DB-->
-			<ul>
-				<li>
-					<img src="img/png/image1.png" alt="image1">
-				</li>
-				
-				<li>
-					<p class="text title">Название и модель рации</p>
-					<hr class="hr-title">
-					<p class="text main">Kenwood TK-F8 DB</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Цена</p>
-					<hr class="hr-title">
-					<p class="text main">1377</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Кол-во</p>
-					<hr class="hr-title">
-					<input class="text main kol-vo" id="prod1" value="1" defval="1" type="text"/>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title" style="opacity:0;">Удалить</p>
-					<hr class="hr-title">
-						<input class="delete" type="button" value="удалить" onclick=""/>
-					<hr class="hr-main">
-				</li>
-			</ul>
-		<!--Рация Рация Baofeng UV-5R-->
-			<ul>
-				<li>
-					<img src="img/png/image_2.png" alt="image_2">
-				</li>
-				
-				<li>
-					<p class="text title">Название и модель рации</p>
-					<hr class="hr-title">
-					<p class="text main">Baofeng UV-5R</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Цена</p>
-					<hr class="hr-title">
-					<p class="text main">1377</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Кол-во</p>
-					<hr class="hr-title">
-					<input class="text main kol-vo" id="prod1" value="1" defval="1" type="text"/>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title" style="opacity:0;">Удалить</p>
-					<hr class="hr-title">
-						<input class="delete" type="button" value="удалить" onclick=""/>
-					<hr class="hr-main">
-				</li>
-			</ul>
-		<!--Рация Рация Baofeng BF-888S-->
-			<ul>
-				<li>
-					<img src="img/png/image_3.png" alt="image_3">
-				</li>
-				
-				<li>
-					<p class="text title">Название и модель рации</p>
-					<hr class="hr-title">
-					<p class="text main">Baofeng BF-888S</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Цена</p>
-					<hr class="hr-title">
-					<p class="text main">1377</p>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title">Кол-во</p>
-					<hr class="hr-title">
-					<input class="text main kol-vo" id="prod1" value="1" defval="1" type="text"/>
-					<hr class="hr-main">
-				</li>
-				
-				<li>
-					<p class="text title" style="opacity:0;">Удалить</p>
-					<hr class="hr-title">
-						<input class="delete" type="button" value="удалить" onclick=""/>
-					<hr class="hr-main">
-				</li>
-			</ul>
-		</div>
-		<p class="text title all">ИТОГО:</p>
-		<p class="text title all-price">1377</p>
-		<hr class="hr-main bottom">
-		
-		<h2>Выбирите аксессуар</h2>
+	<div class="popup zak basket">
 
-		<link rel="stylesheet" href="css/tinycarousel.css" type="text/css" media="screen"/>
-
-		<script type="text/javascript" src="js/jquery.tinycarousel.js"></script>
-		<script type="text/javascript">
-			$(document).ready(function()
-			{
-				$('#slider1').tinycarousel();
-			});
-		</script>
-		
-		<div id="slider1">
-			<a class="buttons prev" href="#"></a>
-			<div class="viewport">
-				<ul class="overview">
-					<li><img src="img/IMG1.jpg" /></li>
-					<li><img src="img/IMG2.jpg" /></li>
-					<li><img src="img/IMG3.jpg" /></li>
-					<li><img src="img/IMG4.jpg" /></li>
-					<li><img src="img/IMG5.jpg" /></li>
-					<li><img src="img/IMG6.jpg" /></li>
-					<li><img src="img/IMG7.jpg" /></li>
-					<li><img src="img/IMG8.jpg" /></li>
-					<li><img src="img/IMG9.jpg" /></li>
-					<li><img src="img/IMG10.jpg" /></li>
-				</ul>
-			</div>
-			<a class="buttons next" href="#"></a>
-		</div>
-		<div class="container center">
-			<a class="continue" href="#close">Продолжить покупки</a>
-			<a class="continue order" href="#win6">Оформить</a>
-		</div>
-		<a class="close" title="Закрыть" href="#close"></a>
 	</div>
 
 		<a href="#x" class="overlay" id="win-zak-1"></a>

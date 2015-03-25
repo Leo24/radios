@@ -388,3 +388,32 @@ function get_list_radio_accessories(){
 	echo json_encode($radioAccessories);
 	die();
 }
+
+add_action("wp_ajax_send_mail_order_request", "send_mail_order_request");
+add_action("wp_ajax_nopriv_send_mail_order_request", "send_mail_order_request");
+
+function send_mail_order_request(){
+	$emailData = $_POST['emailData'];
+
+	$to = 'leo2410@i.ua';
+	$subject = 'Заказ рации';
+	$message = "";
+
+	$message .= "Имя заказчика: ".$emailData['customerName']."\r\n";
+	$message .= "Email: ".$emailData['customerEmail']."\r\n";
+	$message .= "Телефон: ".$emailData['customerPhoneNumber']."\r\n";
+	$message .= "Рация: ".$emailData['orderedProductWithAcc']['radioName']."\r\n";
+	$message .= "ID рации: ".$emailData['orderedProductWithAcc']['radioID']."\r\n";
+	$message .= "Количество раций: ".$emailData['orderedProductWithAcc']['radioQty']."\r\n";
+	$message .= "Аксессуары:\r\n\t";
+	$accessories = $emailData['orderedProductWithAcc']['accessories'];
+	foreach($accessories as $accessory){
+		$message.="Имя акссесуара: ".$accessory['accessoryName']."\r\n\t";
+		$message.="ID: ".$accessory['accessoryID']."\r\n\t";
+		$message.="Цена: ".$accessory['accessoryPrice']."\r\n\t";
+		$message.="Количество: ".$accessory['accessoryQty']."\r\n\t";
+	}
+
+	mail($to , $subject , $message);
+	die();
+}
