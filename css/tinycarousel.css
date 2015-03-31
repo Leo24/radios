@@ -1,6 +1,20 @@
 /* Tiny Carousel */
-#slider-accessories { height: 40%; width:90%; overflow:hidden; margin:0 auto; margin-top:2%; padding: 0 0 10px;   }
-#slider-accessories .viewport { float: left; margin-left:0.5%; width: 81%; height: 100%; overflow: hidden; position: relative; }
+#slider-accessories {
+	height: 38%;
+	width:90%;
+	overflow:hidden;
+	margin:0 auto;
+	margin-top:2%;
+	padding: 0;
+}
+#slider-accessories .viewport {
+	float: left;
+	margin-left: 0.5%;
+	width: 79%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+}
 #slider-accessories .buttons {
     display: block;
     margin: 20px 0px 0 0;
@@ -8,6 +22,7 @@
 	width:45px;
 	height:50px;
     position: relative;
+	top: 25%;
     text-decoration: none;
 }
 #slider-accessories .buttons {

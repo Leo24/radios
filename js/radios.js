@@ -2,10 +2,13 @@ var products, index;
 var productName, productID, productImage, productPrice1, productPrice2, productPrice3, monetary_unit,
     accessoryName, accessoryID, accessoryImage, accessoryPrice1, accessoryPrice2, accessoryPrice3, accessoryPrice4, accessories,
     radioTemplate, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct;
+var url = 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php';
 var orderedProductWithAcc = {
         radioName: '',
         radioID: '',
         radioQty: '',
+        radioPrice: '',
+        monetary: '',
         accessories: {
             //accessory:{
             //    accessoryName: '',
@@ -21,7 +24,7 @@ jQuery(function ($) {
 
     /*get radio attributes*/
     jQuery.ajax({
-        url: 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php',
+        url: url,
         type: "POST",
         data: {action: 'get_list_radios'},
         success: function (data) {
@@ -61,7 +64,7 @@ jQuery(function ($) {
         radioImage = $(that).children('img:first-child').attr('src');
         radioPrice = $(that).find('p.price text b').html();
         jQuery.ajax({
-            url: 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php',
+            url: url,
             type: "POST",
             data: {
                 radioID: radioID,
@@ -90,9 +93,9 @@ jQuery(function ($) {
                         '<p class="accessory-price-4 price-disabled" id="accessory-price-4"><span>'+accessoryPrice4+'</span>&nbsp;<span class="monetary-unit">'+monetary_unit+'</span></p>'+
                         '</li>');
                     }
+                    var accessoryTemplateCheck = accessoryTemplate;
                 }
                 accessoryTemplate = accessoryTemplate.slice().join().replace(/,/g , " ");
-                switchPrices(currentAccessoryQty);
 
                 inTotal=radioPrice;
                 orderFormSingleProduct =
@@ -109,6 +112,10 @@ jQuery(function ($) {
                     '</li>'+
                     '<li>'+
                     '<p class="text title">Кол-во</p>'+
+                    '<hr class="hr-title">'+
+                    '</li>'+
+                    '<li>'+
+                    '<p class="text title">Всего</p>'+
                     '<hr class="hr-title">'+
                     '</li>'+
                     '</div>'+
@@ -129,6 +136,11 @@ jQuery(function ($) {
                     '<hr class="hr-main">'+
                     '</li>'+
                     '<li>'+
+                    '<p class="text main total"  totalsum="'+totalSum+'">'+radioPrice+'</p>'+
+                    '<hr class="hr-main">'+
+                    '</li>'+
+
+                    '<li>'+
                     '<input class="delete" type="button" value="удалить" onclick="">'+
                     '<hr class="hr-main">'+
                     '</li>'+
@@ -138,7 +150,9 @@ jQuery(function ($) {
                     '<p class="text title all">ИТОГО:</p>'+
                     '<p class="text title all-price">'+inTotal+'&nbsp'+monetary_unit+'</p>'+
                     '<hr class="hr-main bottom">'+
-                    '<h2>Выберите аксессуар</h2>'+
+                    '<h2>Выберите аксессуар:</h2>'+
+                        '<p class="buy-prepaid"><span>Купи по предоплате - получи скидку!</span></p>'+
+                        '<input class="buy-prepaid-checkbox" type="checkbox"><p class="buy-prepaid-check"><span>Купить по предоплате</span></p>'+
                     '<div id="slider-accessories">'+
                     '<a class="buttons prev" href=""></a>'+
                     '<div class="viewport">'+
@@ -154,7 +168,14 @@ jQuery(function ($) {
                     '</div>'+
                     '<a class="close popup-zak-basket" title="Закрыть" href="#close"></a>';
                 $('.popup.zak.basket').append(orderFormSingleProduct);
-                $('#slider-accessories').tinycarousel();
+
+                $(document).on('click', '#slider-accessories a', function(event){
+                    event.preventDefault();
+                });
+                if(accessoryTemplateCheck.length >= 4){
+                    $('#slider-accessories').tinycarousel();
+                }
+                switchPrices(currentAccessoryQty);
             }
         });
 
@@ -188,6 +209,9 @@ jQuery(function ($) {
                 '<input class="text main kol-vo" id="accessoryID-'+accessoryID+'" value="1" defval="1" type="number"  min="1">'+
                 '</li>'+
                 '<li>'+
+                '<p class="text main total" order-price="'+orderedAccessory['accessory-price-1']+'" totalSum="'+totalSum+'">'+orderedAccessory['accessory-price-1']+'</p>'+
+                '</li>'+
+                '<li>'+
                 '<input class="delete" type="button" value="удалить" onclick="">'+
                 '</li>'+
                 '<hr class="hr-main">'+
@@ -205,6 +229,9 @@ jQuery(function ($) {
                     if(currentAccessoryID === AddAccessoryID)
                     {
                         currentQantity = parseInt($(this).find('.text.main.kol-vo').attr('value'));
+                        //$(this).find('.text.main.kol-vo').attr('value', currentQantity+1);
+                        //countTotal();
+
                     }else{
                         if(($.inArray(AddAccessoryID, checkID)) == -1){
                             checkID.push(AddAccessoryID);
@@ -225,6 +252,7 @@ jQuery(function ($) {
         orderPrice = $(this).find('.text.main.price').text();
         totalSum = newQuantity * orderPrice;
         $(this).find('.text.main.price').attr('totalsum', totalSum);
+        $(this).find('.text.main.total').html(totalSum);
         countTotal();
     });
 
@@ -232,6 +260,34 @@ jQuery(function ($) {
         countTotal();
         switchPrices(currentAccessoryQty);
     });
+    $(document).on('change', '.popup.zak.basket .buy-prepaid-checkbox', function(){
+        if(($('.popup.zak.basket .buy-prepaid-checkbox')[0].checked)!==false){
+            $('#slider-accessories .accessory-price-1').removeClass('price-active');
+            $('#slider-accessories .accessory-price-2').removeClass('price-disabled');
+            $('#slider-accessories .accessory-price-3').removeClass('price-disabled');
+            $('#slider-accessories .accessory-price-4').removeClass('price-disabled');
+
+            $('#slider-accessories .accessory-price-1').addClass('price-line-through');
+            $('#slider-accessories .accessory-price-2').addClass('price-active');
+            $('#slider-accessories .accessory-price-3').addClass('price-enabled');
+            $('#slider-accessories .accessory-price-4').addClass('price-enabled');
+        }else{
+            $('#slider-accessories').find('li p').each(function(){
+                $(this).removeClass('price-line-through');
+                $(this).removeClass('price-disabled');
+                $(this).removeClass('price-enabled');
+                $(this).removeClass('price-active');
+            });
+
+            $('#slider-accessories .accessory-price-1').addClass('price-active');
+            $('#slider-accessories .accessory-price-2').addClass('price-disabled');
+            $('#slider-accessories .accessory-price-3').addClass('price-disabled');
+            $('#slider-accessories .accessory-price-4').addClass('price-disabled');
+        }
+        countTotal();
+        //switchPrices(currentAccessoryQty);
+    });
+
 
     $(document).on('click', '.popup.zak.basket .continue.zak-basket', function(){
         $('.popup.zak.basket').children().remove();
@@ -263,9 +319,10 @@ jQuery(function ($) {
 
         var objectData = $('.popup.zak.basket .container.basket');
 
-        orderedProductWithAcc.radioName = $(objectData).find('.radio-order-field li p.text.main.name').textContent;
+        orderedProductWithAcc.radioName = $(objectData).find('.radio-order-field li p.text.main.name').html();
         orderedProductWithAcc.radioID = $(objectData).find('.radio-order-field').attr('radioid');
         orderedProductWithAcc.radioQty = $(objectData).find('.radio-order-field li .text.main.kol-vo').attr('value');
+        orderedProductWithAcc.radioPrice = $(objectData).find('.radio-order-field li .text.main.price').attr('totalsum');
         $(objectData).find('.accessory-order-field').each(function(){
           var accessory ={
                     accessoryName: '',
@@ -283,10 +340,11 @@ jQuery(function ($) {
         emailData.customerName = $(that).find('#name_form').attr('value');
         emailData.customerEmail = $(that).find('#mail_form').attr('value');
         emailData.customerPhoneNumber = $(that).find('#phone_form').attr('value');
+        emailData.monetary = monetary_unit[0];
         emailData.orderedProductWithAcc = orderedProductWithAcc;
 
         jQuery.ajax({
-            url: 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php',
+            url: url,
             type: "POST",
             data: {
                 emailData: emailData,
@@ -343,103 +401,109 @@ jQuery(function ($) {
 
     function switchPrices(currentAccessoryQty){
         var sumOrderPrice, accessoryID, accessoryIDtoFind;
-        switch(currentAccessoryQty) {
-            case (0):
-                $('#slider-accessories .overview li p').each(function(){
-                    $(this).removeClass('price-active');
-                    $(this).removeClass('price-line-through');
-                    $(this).removeClass('price-disabled');
-                });
-                /****************************************************************************************/
-                $('#slider-accessories .accessory-price-1').addClass('price-active');
-                $('#slider-accessories .accessory-price-2').addClass('price-disabled');
-                $('#slider-accessories .accessory-price-3').addClass('price-disabled');
-                $('#slider-accessories .accessory-price-4').addClass('price-disabled');
-                $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function(){
-                    accessoryID = $(this).attr('accessoryid');
-                    $('.popup.zak.basket #slider-accessories ul li p span').each(function(){
-                        accessoryIDtoFind = $(this).attr('accessoryid');
-                        if (accessoryIDtoFind == accessoryID ){
-                            sumOrderPrice = $(this).parents().eq(1).find('.accessory-price-1 span:first-child').html();
-                        }
+        if(($('.popup.zak.basket .buy-prepaid-checkbox')[0].checked)!==false) {
+            debugger;
+            switch (currentAccessoryQty) {
+                case (0):
+                    $('#slider-accessories .overview li p').each(function () {
+                        $(this).removeClass('price-active');
+                        $(this).removeClass('price-line-through');
+                        $(this).removeClass('price-disabled');
+                        $(this).removeClass('price-enabled');
                     });
-                    $(this).find('.text.main.price').attr('order-price', sumOrderPrice);
-                    $(this).find('.text.main.price').html(sumOrderPrice);
-                });
-                countTotal();
-                break;
-            case (1):
-                $('#slider-accessories .overview li p').each(function(){
-                    $(this).removeClass('price-active');
-                    $(this).removeClass('price-line-through');
-                    $(this).removeClass('price-disabled');
-                });
-                /****************************************************************************************/
-                $('#slider-accessories .accessory-price-1').addClass('price-line-through');
-                $('#slider-accessories .accessory-price-2').addClass('price-active');
-                $('#slider-accessories .accessory-price-3').addClass('price-disabled');
-                $('#slider-accessories .accessory-price-4').addClass('price-disabled');
-                $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function(){
-                    accessoryID = $(this).attr('accessoryid');
-                    $('.popup.zak.basket #slider-accessories ul li p span').each(function(){
-                        accessoryIDtoFind = $(this).attr('accessoryid');
-                        if (accessoryIDtoFind == accessoryID ){
-                            sumOrderPrice = $(this).parents().eq(1).find('.accessory-price-2 span:first-child').html();
-                        }
+                    /****************************************************************************************/
+                    $('#slider-accessories .accessory-price-1').addClass('price-active');
+                    $('#slider-accessories .accessory-price-2').addClass('price-enabled');
+                    $('#slider-accessories .accessory-price-3').addClass('price-enabled');
+                    $('#slider-accessories .accessory-price-4').addClass('price-enabled');
+                    $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function () {
+                        accessoryID = $(this).attr('accessoryid');
+                        $('.popup.zak.basket #slider-accessories ul li p span').each(function () {
+                            accessoryIDtoFind = $(this).attr('accessoryid');
+                            if (accessoryIDtoFind == accessoryID) {
+                                sumOrderPrice = $(this).parents().eq(1).find('.accessory-price-1 span:first-child').html();
+                            }
+                        });
+                        $(this).find('.text.main.price').attr('order-price', sumOrderPrice);
+                        $(this).find('.text.main.price').html(sumOrderPrice);
                     });
-                    $(this).find('.text.main.price').attr('order-price', sumOrderPrice);
-                    $(this).find('.text.main.price').html(sumOrderPrice);
-                });
-                countTotal();
-                break;
-            case (2):
-                $('#slider-accessories .overview li p').each(function(){
-                    $(this).removeClass('price-active');
-                    $(this).removeClass('price-line-through');
-                    $(this).removeClass('price-disabled');
-                });
-                /****************************************************************************************/
-                $('#slider-accessories .accessory-price-1').addClass('price-line-through');
-                $('#slider-accessories .accessory-price-2').addClass('price-line-through');
-                $('#slider-accessories .accessory-price-3').addClass('price-active');
-                $('#slider-accessories .accessory-price-4').addClass('price-disabled');
-                $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function(){
-                    accessoryID = $(this).attr('accessoryid');
-                    $('.popup.zak.basket #slider-accessories ul li p span').each(function(){
-                        accessoryIDtoFind = $(this).attr('accessoryid');
-                        if (accessoryIDtoFind == accessoryID ){
-                            sumOrderPrice = $(this).parents().eq(1).find('.accessory-price-3 span:first-child').html();
-                        }
+                    countTotal();
+                    break;
+                case (1):
+                    $('#slider-accessories .overview li p').each(function () {
+                        $(this).removeClass('price-active');
+                        $(this).removeClass('price-line-through');
+                        $(this).removeClass('price-disabled');
                     });
-                    $(this).find('.text.main.price').attr('order-price', sumOrderPrice);
-                    $(this).find('.text.main.price').html(sumOrderPrice);
-                });
-                countTotal();
-                break;
-            case (3):
-                $('#slider-accessories .overview li p').each(function(){
-                    $(this).removeClass('price-active');
-                    $(this).removeClass('pprice-line-through');
-                    $(this).removeClass('price-disabled');
-                });
-                /****************************************************************************************/
-                $('#slider-accessories .accessory-price-1').addClass('price-line-through');
-                $('#slider-accessories .accessory-price-2').addClass('price-line-through');
-                $('#slider-accessories .accessory-price-3').addClass('price-line-through');
-                $('#slider-accessories .accessory-price-4').addClass('price-active');
-                $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function(){
-                    accessoryID = $(this).attr('accessoryid');
-                    $('.popup.zak.basket #slider-accessories ul li p span').each(function(){
-                        accessoryIDtoFind = $(this).attr('accessoryid');
-                        if (accessoryIDtoFind == accessoryID ){
-                            sumOrderPrice = $(this).parents().eq(1).find('.accessory-price-4 span:first-child').html();
-                        }
+                    /****************************************************************************************/
+                    $('#slider-accessories .accessory-price-1').addClass('price-line-through');
+                    $('#slider-accessories .accessory-price-2').addClass('price-active');
+                    $('#slider-accessories .accessory-price-3').addClass('price-enabled');
+                    $('#slider-accessories .accessory-price-4').addClass('price-enabled');
+                    $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function () {
+                        accessoryID = $(this).attr('accessoryid');
+                        $('.popup.zak.basket #slider-accessories ul li p span').each(function () {
+                            accessoryIDtoFind = $(this).attr('accessoryid');
+                            if (accessoryIDtoFind == accessoryID) {
+                                sumOrderPrice = $(this).parents().eq(1).find('.accessory-price-2 span:first-child').html();
+                            }
+                        });
+                        $(this).find('.text.main.price').attr('order-price', sumOrderPrice);
+                        $(this).find('.text.main.price').html(sumOrderPrice);
                     });
-                    $(this).find('.text.main.price').attr('order-price', sumOrderPrice);
-                    $(this).find('.text.main.price').html(sumOrderPrice);
-                });
-                countTotal();
-                break;
+                    countTotal();
+                    break;
+                case (2):
+                    $('#slider-accessories .overview li p').each(function () {
+                        $(this).removeClass('price-active');
+                        $(this).removeClass('price-line-through');
+                        $(this).removeClass('price-disabled');
+                    });
+                    /****************************************************************************************/
+                    $('#slider-accessories .accessory-price-1').addClass('price-line-through');
+                    $('#slider-accessories .accessory-price-2').addClass('price-line-through');
+                    $('#slider-accessories .accessory-price-3').addClass('price-active');
+                    $('#slider-accessories .accessory-price-4').addClass('price-enabled');
+                    $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function () {
+                        accessoryID = $(this).attr('accessoryid');
+                        $('.popup.zak.basket #slider-accessories ul li p span').each(function () {
+                            accessoryIDtoFind = $(this).attr('accessoryid');
+                            if (accessoryIDtoFind == accessoryID) {
+                                sumOrderPrice = $(this).parents().eq(1).find('.accessory-price-3 span:first-child').html();
+                            }
+                        });
+                        $(this).find('.text.main.price').attr('order-price', sumOrderPrice);
+                        $(this).find('.text.main.price').html(sumOrderPrice);
+                    });
+                    countTotal();
+                    break;
+                case (3):
+                    $('#slider-accessories .overview li p').each(function () {
+                        $(this).removeClass('price-active');
+                        $(this).removeClass('price-line-through');
+                        $(this).removeClass('price-disabled');
+                    });
+                    /****************************************************************************************/
+                    $('#slider-accessories .accessory-price-1').addClass('price-line-through');
+                    $('#slider-accessories .accessory-price-2').addClass('price-line-through');
+                    $('#slider-accessories .accessory-price-3').addClass('price-line-through');
+                    $('#slider-accessories .accessory-price-4').addClass('price-active');
+                    $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function () {
+                        accessoryID = $(this).attr('accessoryid');
+                        $('.popup.zak.basket #slider-accessories ul li p span').each(function () {
+                            accessoryIDtoFind = $(this).attr('accessoryid');
+                            if (accessoryIDtoFind == accessoryID) {
+                                sumOrderPrice = $(this).parents().eq(1).find('.accessory-price-4 span:first-child').html();
+                            }
+                        });
+                        $(this).find('.text.main.price').attr('order-price', sumOrderPrice);
+                        $(this).find('.text.main.price').html(sumOrderPrice);
+                    });
+                    countTotal();
+                    break;
+            }
+        }else{
+            return false;
         }
     }
 

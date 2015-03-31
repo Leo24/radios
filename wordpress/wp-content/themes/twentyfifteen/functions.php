@@ -342,7 +342,7 @@ function get_list_radios(){
 		'post_status'      => 'publish',
 	);
 	$radios = get_posts( $argsRadios );
-	$prices = [];
+	$prices = array();
 	foreach ($radios as $key => $radio){
 		$radio_meta = get_post_meta($radio->ID);
 		$radio_image = wp_get_attachment_metadata( $radio_meta['radio_image'][0] );
@@ -370,7 +370,7 @@ function get_list_radio_accessories(){
 		'post_status'      => 'publish',
 	);
 	$accessories = get_posts( $argsAccessories );
-	$accessory_list = [];
+	$accessory_list = array();
 	foreach($accessories as $key => $accessory){
 		$accessory_meta = get_post_meta( $accessory->ID);
 		$accessory_meta['accessory_ID'] = $accessory->ID;
@@ -394,15 +394,15 @@ add_action("wp_ajax_nopriv_send_mail_order_request", "send_mail_order_request");
 
 function send_mail_order_request(){
 	$emailData = $_POST['emailData'];
-
-	$to = 'leo2410@i.ua';
+	$to = 'leo2410@yandex.ru';
 	$subject = 'Заказ рации';
 	$message = "";
-
 	$message .= "Имя заказчика: ".$emailData['customerName']."\r\n";
 	$message .= "Email: ".$emailData['customerEmail']."\r\n";
 	$message .= "Телефон: ".$emailData['customerPhoneNumber']."\r\n";
-	$message .= "Рация: ".$emailData['orderedProductWithAcc']['radioName']."\r\n";
+	$message .= "Валюта: ".$emailData['monetary']."\r\n";
+	$message .= "Рация: ".strip_tags($emailData['orderedProductWithAcc']['radioName'])."\r\n";
+	$message .= "Цена рации: ".$emailData['orderedProductWithAcc']['radioPrice']."\r\n";
 	$message .= "ID рации: ".$emailData['orderedProductWithAcc']['radioID']."\r\n";
 	$message .= "Количество раций: ".$emailData['orderedProductWithAcc']['radioQty']."\r\n";
 	$message .= "Аксессуары:\r\n\t";
@@ -413,7 +413,8 @@ function send_mail_order_request(){
 		$message.="Цена: ".$accessory['accessoryPrice']."\r\n\t";
 		$message.="Количество: ".$accessory['accessoryQty']."\r\n\t";
 	}
-
 	mail($to , $subject , $message);
+	$check = mail($to , $subject , $message);
+	echo json_encode($check);
 	die();
 }

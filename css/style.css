@@ -1266,8 +1266,8 @@ td {
 
 /* ����� ���������� ���� ��� �������*/
 .popup.zak{ 
-	width:800px;
-	height:550px;
+	width:70%;
+	height:95%;
     margin: auto;
     display: block;
     left: 0; right: 0;
@@ -1302,7 +1302,7 @@ td {
 	display: block;
 	width: 100px;
 	height: 100px;
-	margin-top: -25px;
+	margin-top: -30px;
 	transform: rotate(-45deg) scale(0.25, 0.67);
 }
 
@@ -1313,7 +1313,7 @@ td {
 .popup.zak .accessory-order-field .hr-main{
 	float: none;
 	clear: both;
-	margin-left: 120px;
+	margin-left: 20px;
 }
 
 .popup.zak .accessory-order-field img{
@@ -1331,6 +1331,7 @@ td {
 	width: 130px;
 	height: 100%;
 	margin: 0 5px;
+	border: none;
 }
 .popup.zak ul li p.accessory-name {
 	width: 130px;
@@ -1373,13 +1374,13 @@ td {
 	margin:0 auto;
 }
 .popup.zak .container{
-	float:left;
-	width:90%;
-	height:27%;
-	overflow-y:auto;
+	float: left;
+	width: 90%;
+	height: 30%;
+	overflow-y: auto;
 }
 .overlay:target+.popup.zak{
-    top: 10%;
+    top: 3%;
     opacity: 0.96;
     visibility: visible;
 }
@@ -1402,6 +1403,13 @@ td {
     color:#043871;
 }
 
+.popup.zak.basket .container.basket .radio-order-field-title li:first-child .hr-title{
+	margin-left: -26%;
+}
+.popup.zak.basket .container.basket .radio-order-field li:nth-child(2) .hr-main{
+	width: 222%;
+	margin-left: -33%;
+}
 .popup.zak.basket .container.basket .radio-order-field-title{
 	width: auto;
 	height: auto;
@@ -1415,6 +1423,14 @@ td {
 	height: auto;
 	float: left;
 }
+.popup.zak.basket .container.basket .radio-order-field-title li:first-child p{
+	margin-left: 30px;
+	text-align: left;
+}
+.popup.zak.basket .container.basket .radio-order-field-title li p{
+	margin-left: 17px;
+	text-align: center;
+}
 .popup.zak.basket .container.basket .radio-order-field-title li:first-child{
 	width: 300px;
 	margin-top: 0;
@@ -1425,15 +1441,14 @@ td {
 .popup.zak.basket .container.basket .radio-order-field-title li:nth-child(3){
 	width: 80px;
 }
-.popup.zak.basket .container.basket .radio-order-field-title li:nth-child(3) .hr-title{
-	width: 250%;
+.popup.zak.basket .container.basket .radio-order-field-title li:last-child .hr-title{
+	width: 280%;
 }
-
 
 .popup.zak ul{
 	float:left;
 	width:100%;
-	height:90px;
+	/*height:90px;*/
 }
 .popup.zak ul li{
 	float:left;
@@ -1469,7 +1484,7 @@ td {
 	margin-left:20px;
 }
 .popup.zak ul li:nth-child(2){
-	width:300px;
+	width: 200px;
 }
 .popup.zak ul li:nth-child(2) .text.main{
 	margin-left:10px;
@@ -1518,12 +1533,12 @@ td {
 	float:left;
 	margin-top:2%;
 	margin-bottom:1%;
-	margin-left:35%;
+	margin-left: 48%;
 }
 .all-price{
 	font-family:'HelveticaNeueCyr-Bold';
 	float:left;
-	margin-top:2%;
+	margin-top:1.5%;
 	margin-bottom:1%;
 	margin-left:7.5%;
 }
@@ -1585,7 +1600,7 @@ td {
 }
 .popup.zak .container.center{
 	margin-left:13.6%;
-	margin-top: 2%;
+	/*margin-top: 2%;*/
 }
 .text_form.order{
 	padding-top:13%;
@@ -1740,6 +1755,13 @@ a.cart{
 }
 
 
+.price-prepaid{
+
+}
+
+.price-enabled{
+	color: #879ea5;
+}
 .price-disabled{
 	display: none;
 }

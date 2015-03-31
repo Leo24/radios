@@ -23,6 +23,7 @@
 <!-- 		<script type="text/javascript" src="./js/modal.js"></script> -->
 		<script type="text/javascript" src="./js/example.js"></script>
 		<script type="text/javascript" src="js/countdown.js"></script>
+		<script type="text/javascript" src="js/jquery.tinycarousel.js"></script>
 		<script type="text/javascript" src="js/radios.js"></script>
 
 		<script src="js/wow.min.js"></script>
