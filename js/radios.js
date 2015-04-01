@@ -136,7 +136,7 @@ jQuery(function ($) {
                     '<hr class="hr-main">'+
                     '</li>'+
                     '<li>'+
-                    '<p class="text main total"  totalsum="'+totalSum+'">'+radioPrice+'</p>'+
+                    '<p class="text main linetotal"  totalsum="'+totalSum+'">'+radioPrice+'</p>'+
                     '<hr class="hr-main">'+
                     '</li>'+
 
@@ -209,37 +209,35 @@ jQuery(function ($) {
                 '<input class="text main kol-vo" id="accessoryID-'+accessoryID+'" value="1" defval="1" type="number"  min="1">'+
                 '</li>'+
                 '<li>'+
-                '<p class="text main total" order-price="'+orderedAccessory['accessory-price-1']+'" totalSum="'+totalSum+'">'+orderedAccessory['accessory-price-1']+'</p>'+
+                '<p class="text main linetotal" order-price="">'+orderedAccessory['accessory-price-1']+'</p>'+
                 '</li>'+
                 '<li>'+
                 '<input class="delete" type="button" value="удалить" onclick="">'+
                 '</li>'+
                 '<hr class="hr-main">'+
                 '</ul>';
-            var currentQantity, currentAccessoryID;
-            var AddAccessoryID = $(accessoryOrderFormTemplate).attr('accessoryid');
-            if($('.popup.zak.basket .container.basket ul.accessory-order-field').length == 0){
+            //var AddAccessoryID = $(accessoryOrderFormTemplate).attr('accessoryid');
+            //if($('.popup.zak.basket .container.basket ul.accessory-order-field').length == 0){
                 $('.popup.zak.basket .container.basket').append(accessoryOrderFormTemplate);
-                if(($.inArray(AddAccessoryID, checkID)) == -1){
-                    checkID.push(AddAccessoryID);
-                }
-            }else{
-                $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function(){
-                    currentAccessoryID = $(this).attr('accessoryid');
-                    if(currentAccessoryID === AddAccessoryID)
-                    {
-                        currentQantity = parseInt($(this).find('.text.main.kol-vo').attr('value'));
-                        //$(this).find('.text.main.kol-vo').attr('value', currentQantity+1);
-                        //countTotal();
-
-                    }else{
-                        if(($.inArray(AddAccessoryID, checkID)) == -1){
-                            checkID.push(AddAccessoryID);
-                            $('.popup.zak.basket .container.basket').append(accessoryOrderFormTemplate);
-                        }
-                    }
-                });
-            }
+                //if(($.inArray(AddAccessoryID, checkID)) == -1){
+                    //checkID.push(AddAccessoryID);
+                //}
+            //}
+            //else{
+            //    $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function(){
+            //        currentAccessoryID = $(this).attr('accessoryid');
+            //        if(currentAccessoryID === AddAccessoryID){
+            //            currentQantity = parseInt($(this).find('.text.main.kol-vo').attr('value'));
+            //            //$(this).find('.text.main.kol-vo').attr('value', currentQantity+1);
+            //            //countTotal();
+            //        }else{
+            //            if(($.inArray(AddAccessoryID, checkID)) == -1){
+            //                checkID.push(AddAccessoryID);
+            //                $('.popup.zak.basket .container.basket').append(accessoryOrderFormTemplate);
+            //            }
+            //        }
+            //    });
+            //}
             countTotal();
             switchPrices(currentAccessoryQty);
         });
@@ -248,18 +246,23 @@ jQuery(function ($) {
 /***********************************OnChange ana Onlick actions*************************************************/
 
     $(document).on('change', '.popup.zak.basket ul', function(){
+        debugger;
         newQuantity = $(this).find('.text.main.kol-vo').val();
         orderPrice = $(this).find('.text.main.price').text();
         totalSum = newQuantity * orderPrice;
         $(this).find('.text.main.price').attr('totalsum', totalSum);
-        $(this).find('.text.main.total').html(totalSum);
         countTotal();
+        countTotalInline;
     });
 
     $(document).on('change', '.popup.zak.basket .container.basket input', function(){
+        countTotalInline();
         countTotal();
         switchPrices(currentAccessoryQty);
     });
+
+
+
     $(document).on('change', '.popup.zak.basket .buy-prepaid-checkbox', function(){
         if(($('.popup.zak.basket .buy-prepaid-checkbox')[0].checked)!==false){
             $('#slider-accessories .accessory-price-1').removeClass('price-active');
@@ -283,8 +286,11 @@ jQuery(function ($) {
             $('#slider-accessories .accessory-price-2').addClass('price-disabled');
             $('#slider-accessories .accessory-price-3').addClass('price-disabled');
             $('#slider-accessories .accessory-price-4').addClass('price-disabled');
+
+
         }
-        countTotal();
+
+        //countTotal();
         //switchPrices(currentAccessoryQty);
     });
 
@@ -368,6 +374,22 @@ jQuery(function ($) {
 
     /**************************FUNCTIONS********************************/
 
+    function countTotalInline(){
+        var unitPrice, qTy, totalInlinePrice;
+        $('.popup.zak.basket .container.basket ul').each(function(){
+            debugger;
+            unitPrice = $(this).find('li p.text.main.price').text();
+            qTy = $(this).find('li .text.main.kol-vo').attr('value');
+            totalInlinePrice = unitPrice*qTy;
+            $(this).find('li p.text.main.linetotal').html(totalInlinePrice);
+            debugger;
+        });
+
+    }
+
+
+
+
     function countTotal(){
         var totalSum=[];
         $('.popup.zak.basket .container.basket ul ').each(function(){
@@ -402,7 +424,6 @@ jQuery(function ($) {
     function switchPrices(currentAccessoryQty){
         var sumOrderPrice, accessoryID, accessoryIDtoFind;
         if(($('.popup.zak.basket .buy-prepaid-checkbox')[0].checked)!==false) {
-            debugger;
             switch (currentAccessoryQty) {
                 case (0):
                     $('#slider-accessories .overview li p').each(function () {
