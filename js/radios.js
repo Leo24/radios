@@ -1,6 +1,6 @@
 var products, index;
 var productName, productID, productImage, productPrice1, productPrice2, productPrice3, monetary_unit,
-    accessoryName, accessoryID, accessoryImage, accessoryPrice1, accessoryPrice2, accessoryPrice3, accessoryPrice4, accessories,
+    accessoryName, accessoryID, accessoryImage, accessoryGiftOption, accessoryPrice1, accessoryPrice2, accessoryPrice3, accessoryPrice4, accessories,
     radioTemplate, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct;
 var url = 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php';
 var orderedProductWithAcc = {
@@ -84,8 +84,12 @@ jQuery(function ($) {
                         accessoryPrice2 = accessory.price_2[0];
                         accessoryPrice3 = accessory.price_3[0];
                         accessoryPrice4 = accessory.price_4[0];
+                        if(typeof accessory.gift != 'undefined') {
+                            accessoryGiftOption = accessory.gift[0];
+                        }else{accessoryGiftOption = '0'}
                         accessoryTemplate.push('<li>' +
-                        '<p class="accessory-name" id="accessory-name"><span class="accessory-name" accessoryID="'+accessoryID+'">'+accessoryName+'</span></p>'+
+                        '<p class="accessory-name" id="accessory-name"><span class="accessory-name" accessoryID="'+accessoryID+'">'+accessoryName+'</span>'+
+                        '<input type=button class="gift'+accessoryGiftOption+'" value="Получить в подарок"></p>'+
                         '<div class="accessory-image" id="accessory-image"><img src="'+accessoryImage+'" alt="'+accessoryName+'"></div>'+
                         '<p class="accessory-price-1 price-active" id="accessory-price-1"><span>'+accessoryPrice1+'</span>&nbsp;<span class="monetary-unit">'+monetary_unit+'</span></p>'+
                         '<p class="accessory-price-2 price-disabled" id=accessory-price-2"><span>'+accessoryPrice2+'</span>&nbsp;<span class="monetary-unit">'+monetary_unit+'</span></p>'+
@@ -99,7 +103,7 @@ jQuery(function ($) {
 
                 inTotal=radioPrice;
                 orderFormSingleProduct =
-                    '<h1><img src="img/png/cart.png" alt="cart">&nbsp; Оформление заказа</h1>'+
+                    '<h1><img src="img/png/cart.png" alt="cart">&nbsp;Оформление заказа</h1>'+
                     '<div class="container basket">'+
                     '<div class = "radio-order-field-title">'+
                     '<li>'+
@@ -209,41 +213,44 @@ jQuery(function ($) {
                 '<input class="text main kol-vo" id="accessoryID-'+accessoryID+'" value="1" defval="1" type="number"  min="1">'+
                 '</li>'+
                 '<li>'+
-                '<p class="text main linetotal" order-price="">'+orderedAccessory['accessory-price-1']+'</p>'+
+                '<p class="text main linetotal" order-price=""></p>'+
                 '</li>'+
                 '<li>'+
                 '<input class="delete" type="button" value="удалить" onclick="">'+
                 '</li>'+
                 '<hr class="hr-main">'+
                 '</ul>';
-            //var AddAccessoryID = $(accessoryOrderFormTemplate).attr('accessoryid');
-            //if($('.popup.zak.basket .container.basket ul.accessory-order-field').length == 0){
+            var currentQantity, currentAccessoryID;
+            var AddAccessoryID = $(accessoryOrderFormTemplate).attr('accessoryid');
+            if($('.popup.zak.basket .container.basket ul.accessory-order-field').length == 0){
                 $('.popup.zak.basket .container.basket').append(accessoryOrderFormTemplate);
-                //if(($.inArray(AddAccessoryID, checkID)) == -1){
-                    //checkID.push(AddAccessoryID);
-                //}
-            //}
-            //else{
-            //    $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function(){
-            //        currentAccessoryID = $(this).attr('accessoryid');
-            //        if(currentAccessoryID === AddAccessoryID){
-            //            currentQantity = parseInt($(this).find('.text.main.kol-vo').attr('value'));
+                if(($.inArray(AddAccessoryID, checkID)) == -1){
+                    checkID.push(AddAccessoryID);
+                }
+            }
+            else{
+                $('.popup.zak.basket .container.basket ul.accessory-order-field').each(function(){
+                    currentAccessoryID = $(this).attr('accessoryid');
+                    if(currentAccessoryID === AddAccessoryID){
+                        currentQantity = parseInt($(this).find('.text.main.kol-vo').attr('value'));
+                        return false;
             //            //$(this).find('.text.main.kol-vo').attr('value', currentQantity+1);
             //            //countTotal();
-            //        }else{
-            //            if(($.inArray(AddAccessoryID, checkID)) == -1){
-            //                checkID.push(AddAccessoryID);
-            //                $('.popup.zak.basket .container.basket').append(accessoryOrderFormTemplate);
-            //            }
-            //        }
-            //    });
-            //}
+                    }else{
+                        if(($.inArray(AddAccessoryID, checkID)) == -1){
+                            checkID.push(AddAccessoryID);
+                            $('.popup.zak.basket .container.basket').append(accessoryOrderFormTemplate);
+                        }
+                    }
+                });
+            }
+            countTotalInline();
             countTotal();
             switchPrices(currentAccessoryQty);
         });
     });
 
-/***********************************OnChange ana Onlick actions*************************************************/
+/***********************************OnChange ana Onclick actions*************************************************/
 
     $(document).on('change', '.popup.zak.basket ul', function(){
         debugger;
@@ -252,16 +259,14 @@ jQuery(function ($) {
         totalSum = newQuantity * orderPrice;
         $(this).find('.text.main.price').attr('totalsum', totalSum);
         countTotal();
-        countTotalInline;
+        countTotalInline();
     });
 
     $(document).on('change', '.popup.zak.basket .container.basket input', function(){
-        countTotalInline();
         countTotal();
         switchPrices(currentAccessoryQty);
+        countTotalInline();
     });
-
-
 
     $(document).on('change', '.popup.zak.basket .buy-prepaid-checkbox', function(){
         if(($('.popup.zak.basket .buy-prepaid-checkbox')[0].checked)!==false){
@@ -286,12 +291,10 @@ jQuery(function ($) {
             $('#slider-accessories .accessory-price-2').addClass('price-disabled');
             $('#slider-accessories .accessory-price-3').addClass('price-disabled');
             $('#slider-accessories .accessory-price-4').addClass('price-disabled');
-
-
         }
-
-        //countTotal();
-        //switchPrices(currentAccessoryQty);
+        countTotal();
+        switchPrices(currentAccessoryQty);
+        countTotalInline();
     });
 
 
@@ -300,9 +303,14 @@ jQuery(function ($) {
     });
 
     $(document).on('click', '.popup.zak.basket .delete', function(){
+        var index = checkID.indexOf($(this).parents().eq(1).attr('accessoryid'));
+        if (index > -1) {
+            checkID.splice(index, 1);
+        }
         $(this).parents().eq(1).remove();
         countTotal();
         switchPrices(currentAccessoryQty);
+        countTotalInline();
     });
 
     $(document).on('click', '.close.popup-zak-basket', function(){
@@ -365,26 +373,20 @@ jQuery(function ($) {
         $('.popup.zak.basket').children().remove();
     });
 
-
-
-
-
-
-
-
     /**************************FUNCTIONS********************************/
 
     function countTotalInline(){
         var unitPrice, qTy, totalInlinePrice;
         $('.popup.zak.basket .container.basket ul').each(function(){
-            debugger;
             unitPrice = $(this).find('li p.text.main.price').text();
             qTy = $(this).find('li .text.main.kol-vo').attr('value');
-            totalInlinePrice = unitPrice*qTy;
-            $(this).find('li p.text.main.linetotal').html(totalInlinePrice);
-            debugger;
+            if(qTy==1){
+                $(this).find('li p.text.main.linetotal').html(unitPrice);
+            }else{
+                totalInlinePrice = unitPrice*qTy;
+                $(this).find('li p.text.main.linetotal').html(totalInlinePrice);
+            }
         });
-
     }
 
 
@@ -414,10 +416,6 @@ jQuery(function ($) {
         });
     }
 
-    function countTotalRadiosWithAcc(){
-
-
-    }
 
 
 
