@@ -330,8 +330,6 @@ require get_template_directory() . '/inc/template-tags.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
-
-
 add_action("wp_ajax_get_list_radios", "get_list_radios");
 add_action("wp_ajax_nopriv_get_list_radios", "get_list_radios");
 
@@ -343,17 +341,21 @@ function get_list_radios(){
 	);
 	$radios = get_posts( $argsRadios );
 	$prices = array();
+	$radio_images = array();
 	foreach ($radios as $key => $radio){
 		$radio_meta = get_post_meta($radio->ID);
-		$radio_image = wp_get_attachment_metadata( $radio_meta['radio_image'][0] );
-		$upload_dir = wp_upload_dir();
-		$radio->radio_img = $upload_dir['baseurl'].'/'.$radio_image['file'];
 		foreach ($radio_meta as $key1 => $value){
 			if (false !== strpos($key1, 'price' )){
 				$prices[$key1] = $value;
 			}
+			if (false !== strpos($key1, 'radio_image' )){
+				$radio_image = wp_get_attachment_metadata( $value[0] );
+				$upload_dir = wp_upload_dir();
+				$radio_images[$key1] = $upload_dir['baseurl'].'/'.$radio_image['file'];
+			}
 		}
 		$radios[$key]->prices = $prices;
+		$radios[$key]->radio_images = $radio_images;
 	}
 	echo json_encode($radios);
 	die();
@@ -365,6 +367,8 @@ add_action("wp_ajax_nopriv_get_list_radio_accessories", "get_list_radio_accessor
 function get_list_radio_accessories(){
 	$argsAccessories = array(
 		'numberposts'	   =>'0',
+		'orderby'          => 'ID',
+		'order'            => 'ASC',
 		'post_type'=>'attachment',
 		'post_type'        => 'accessories',
 		'post_status'      => 'publish',
@@ -394,7 +398,7 @@ add_action("wp_ajax_nopriv_send_mail_order_request", "send_mail_order_request");
 
 function send_mail_order_request(){
 	$emailData = $_POST['emailData'];
-	$to = 'leo2410@yandex.ru';
+	$to = 'leo2410@i.ua';
 	$subject = 'Заказ рации';
 	$message = "";
 	$message .= "Имя заказчика: ".$emailData['customerName']."\r\n";

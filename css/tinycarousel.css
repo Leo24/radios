@@ -1,16 +1,17 @@
 /* Tiny Carousel */
 #slider-accessories {
-	height: 38%;
-	width:90%;
+	height: 245px;
+	width: 88%;
 	overflow:hidden;
-	margin:0 auto;
-	margin-top:2%;
+	margin: 0 auto;
+	/*margin-top:2%;*/
 	padding: 0;
+	clear: both;
 }
 #slider-accessories .viewport {
 	float: left;
 	margin-left: 0.5%;
-	width: 79%;
+	width: 698px;
 	height: 100%;
 	overflow: hidden;
 	position: relative;

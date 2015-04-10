@@ -100,7 +100,7 @@
 <body>
 
 <!-- CONTENT -->
-	
+
     <div id="header">
 		<div class="content">
 			<div class="left_sitebar">
@@ -225,7 +225,7 @@
 
 					</script>
 				</div>
-				<p class="btns del"><a href="#win-zak-1"><input class="button del" type="button" value=""/></a></p>
+<!--				<p class="btns del"><a href="#win-zak-1"><input class="button del get-detail" type="button" value=""/></a></p>-->
 <!--				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>-->
 			</div>
 		</div>
@@ -274,7 +274,7 @@
 
 					</script>
 				</div>
-				<p class="btns del"><a href="#win-zak-2"><input class="button del" type="button" value=""/></a></p>
+<!--				<p class="btns del"><a href="#win-zak-2"><input class="button del" type="button" value=""/></a></p>-->
 <!--				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>-->
 			</div>
 		</div>
@@ -323,7 +323,7 @@
 
 					</script>
 				</div>
-				<p class="btns del"><a href="#win-zak-3"><input class="button del" type="button" value=""/></a></p>
+<!--				<p class="btns del"><a href="#win-zak-3"><input class="button del" type="button" value=""/></a></p>-->
 <!--				<p class="btns"><a href="#win-zak"><input class="button" type="button" value=""/></a></p>-->
 			</div>
 		</div>
@@ -661,112 +661,9 @@
 	<div class="popup zak basket">
 
 	</div>
-
-		<a href="#x" class="overlay" id="win-zak-1"></a>
-	<div class="popup zak del">
-		<h1></h1>
-		<div class="container left del">
-			<p class="text">
-				<br /><b>Baofeng UV-5R</b>
-				<br />
-				<br />Технические характеристики:
-				<br />
-				<br />Диапазон частот: 400-470 / 136-174 Мгц;
-				<br />Мощность: 5 Вт;
-				<br />Емкость аккумулятора: 1800 мАч;
-				<br />Пылевлагозащита: IP56;
-				<br />Напряжение питания: 7.4 В;
-				<br />Число каналов: 128;
-				<br />Размеры: 95x58x32 мм;
-				<br />Вес рации без батареи: 105 г;
-				<br />VOX (активация голосом).
-				<br />Чуствительность: 0.16 мкВ;
-				<br />Шаг сетки частот: 5 кГц;
-				<br />
-				<br />Кнопка PTT: Одинарная;
-				<br />Наличие цифровой клавиатуры.
-				<br />Скремблер.
-				<br />
-				<br />Экран: Монохромный;
-				<br />Тип аккумулятора: Li-ion;
-				<br />
-				<br />Комплект:
-				<br />
-				<br />Зарядное устройство, Антенна, Аккумулятор, Клипса.
-			</p>
-		</div>
-		<a class="close" title="Закрыть" href="#close"></a>
-	</div>
-
-		<a href="#x" class="overlay" id="win-zak-2"></a>
-	<div class="popup zak del">
-		<h1></h1>
-		<div class="container left del">
-			<p class="text">
-				<br /><b>Рация Kenwood TK-F8 (400-470 Мгц)</b>
-				<br />
-				<br />Технические характеристики:
-				<br />
-				<br />Диапазон частот: 400-470 Мгц;
-				<br />Мощность: 5 Вт;
-				<br />Емкость аккумулятора: 1800 мАч;
-				<br />Пылевлагозащита: IP56;
-				<br />Напряжение питания: 7.4 В;
-				<br />Число каналов: 128;
-				<br />Размеры: 95x58x32 мм;
-				<br />Вес рации без батареи: 105 г;
-				<br />VOX (активация голосом).
-				<br />Чуствительность: 0.16 мкВ;
-				<br />Шаг сетки частот: 5 кГц;
-				<br />
-				<br />Кнопка PTT: Одинарная;
-				<br />Наличие цифровой клавиатуры.
-				<br />Скремблер.
-				<br />
-				<br />Экран: Монохромный;
-				<br />Тип аккумулятора: Li-ion;
-				<br />
-				<br />Комплект:
-				<br />
-				<br />Зарядное устройство, Антенна, Аккумулятор, Клипса.
-			</p>
-		</div>
-		<a class="close" title="Закрыть" href="#close"></a>
-	</div>
-	
 		<a href="#x" class="overlay" id="win-zak-3"></a>
 	<div class="popup zak del">
-		<h1></h1>
-		<div class="container left del">
-			<p class="text">
-				<br /><b>Baofeng BF-888S</b>
-				<br />
-				<br />Технические характеристики:
-				<br />
-				<br />Диапазон частот: 400-470 Мгц;
-				<br />Мощность: 5 Вт;
-				<br />Емкость аккумулятора: 1500 мАч;
-				<br />Пылевлагозащита: IP56;
-				<br />Напряжение питания: 3.7 В;
-				<br />Число каналов: 128;
-				<br />Размеры: 110x50x32 мм;
-				<br />Вес рации без батареи: 105 г;
-				<br />VOX (активация голосом).
-				<br />Чуствительность: 0.16 мкВ;
-				<br />Шаг сетки частот: 5 кГц;
-				<br />
-				<br />Кнопка PTT: Одинарная;
-				<br />Наличие цифровой клавиатуры.
-				<br />Скремблер.
-				<br />
-				<br />Экран: Монохромный;
-				<br />Тип аккумулятора: Li-ion;
-				<br />
-				<br />Комплект:
-				<br />
-				<br />Зарядное устройство, Антенна, Аккумулятор, Клипса.
-			</p>
-		</div>
+
 		<a class="close" title="Закрыть" href="#close"></a>
 	</div>
 	
