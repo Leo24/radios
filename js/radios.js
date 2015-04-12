@@ -1,7 +1,7 @@
 var products, index;
 var productName, productID, productImage, productPrice1, productPrice2, productPrice3, productImage1, productImage2, productImage3, monetary_unit,
     accessoryName, accessoryID, accessoryImage, accessoryGiftOption, accessoryPrice1, accessoryPrice2, accessoryPrice3, accessoryPrice4, accessories,
-    radioTemplate, radioTemplateDetailedInfo, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct;
+    radioTemplate, radioTemplateDetailedInfo, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct, signatureValue;
 var url = 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php';
 var orderedProductWithAcc = {
     radioName: '',
@@ -30,7 +30,7 @@ jQuery(function ($) {
         success: function (data) {
             products = JSON.parse(data);
             for(index in products) {
-                if (products.hasOwnProperty(index)){
+                if (products.hasOwnProperty(index)) {
                     productName = products[index].post_title;
                     productID = products[index].ID;
                     productImage = products[index].radio_images.radio_image;
@@ -41,28 +41,31 @@ jQuery(function ($) {
                     productImage1 = products[index].radio_images.radio_image_1;
                     productImage2 = products[index].radio_images.radio_image_2;
                     productImage3 = products[index].radio_images.radio_image_3;
-                    radioTemplate = 'product-name="'+productName+'" ' +
-                    'product-id="'+productID+'"' +
-                    'product-image="'+productImage+'" ' +
-                    'price-1="'+productPrice1+'"' +
-                    'price-2="'+productPrice2+'"' +
-                    'price-3="'+productPrice3+'"';
-                    radioTemplateDetailedInfo = 'product-name="'+productName+'" ' +
-                    'product-id="'+productID+'"' +
-                    'product-content="'+products[index].post_content+'"' +
-                    'img-1="'+productImage1+'"'+
-                    'img-2="'+productImage2+'"'+
-                    'img-3="'+productImage3+'"';
-                    $('.container.c'+index+' h2 text').append(productName);
-                    $('.container.c'+index+' h2').attr('productID', productID);
-                    $('.container.c'+index+' .content img').attr('src', productImage);
-                    $('.container.c'+index+' .content').append(
-                        '<p class="btns del"><a href="#win-zak-3"><input class="button del get-detailed-info" type="button" value=""'+radioTemplateDetailedInfo+'/></a></p>');
-                    $('.container.c'+index+' .content').append(
-                        '<p class="btns"><a href="#win-zak"><input class="button do-order" type="button" value=""'+ radioTemplate + '></a></p>');
+                    radioTemplate = 'product-name="' + productName + '" ' +
+                    'product-id="' + productID + '"' +
+                    'product-image="' + productImage + '" ' +
+                    'price-1="' + productPrice1 + '"' +
+                    'price-2="' + productPrice2 + '"' +
+                    'price-3="' + productPrice3 + '"';
+                    radioTemplateDetailedInfo = 'product-name="' + productName + '" ' +
+                    'product-id="' + productID + '"' +
+                    'product-content="' + products[index].post_content + '"' +
+                    'img-1="' + productImage1 + '"' +
+                    'img-2="' + productImage2 + '"' +
+                    'img-3="' + productImage3 + '"';
+                    $('.container.c' + index + ' h2 text').append(productName);
+                    $('.container.c' + index + ' h2').attr('productID', productID);
+                    $('.container.c' + index + ' .content img').attr('src', productImage);
+                    $('.container.c' + index + ' .content').append(
+                        '<p class="btns del"><a href="#win-zak-3"><input class="button del get-detailed-info" type="button" value=""' + radioTemplateDetailedInfo + '/></a></p>');
+                    $('.container.c' + index + ' .content').append(
+                        '<p class="btns"><a href="#win-zak"><input class="button do-order" type="button" value=""' + radioTemplate + '></a></p>');
+
                 }
             }
+
         }
+
     });
     /*end get radio attributes*/
 
@@ -188,7 +191,7 @@ jQuery(function ($) {
                     '<a class="buttons next" href=""></a>'+
                     '</div>'+
                     '<div class="container center">'+
-                    '<a class="continue zak-basket" href="#close">Продолжить покупки</a>'+
+                    '<a class="continue zak-basket leave-busket" href="#close">Продолжить покупки</a>'+
                         //'<a class="continue order order-zak-basket" href="#win6">Оформить</a>'+
 
                     '<form class="continue order order-zak-basket" action="http://test.robokassa.ru/Index.aspx" method="get">' +
@@ -199,6 +202,7 @@ jQuery(function ($) {
                     '<input class="inccurrent" type="hidden" name="IncCurrent" value="WMZM">'+/*валюта*/
                     '<input type="hidden" name="Culture" value="ru">'+
                     '<input type="hidden" name="Encoding" value="utf-8">'+
+                    '<input class="signature-value" type="hidden" name="SignatureValue" value="">'+
                     '<a class="continue order order-zak-basket" href="#win6">Оформить</a>'+
                     '</form>'+
                     '</div>'+
@@ -368,9 +372,23 @@ jQuery(function ($) {
     /*Submit data to robokassa*/
     $(document).on('click', '.container.center .continue.order.order-zak-basket', function(event){
         event.preventDefault();
-        var orderTotal = $('p.text.title.all-price').attr('total');
-        $('.container.center form input.outsum').attr('value', orderTotal);
-        $('.container.center form').submit();
+        var orderTotal = $(this).parents().eq(2).find('.text.title.all-price').attr('total');
+        jQuery.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                orderTotal: orderTotal,
+                action: 'create_signatureValue'
+
+            },
+            success: function (data) {
+                var robokassaData = JSON.parse(data);
+                $('.container.center form input.outsum').attr('value', robokassaData.out_sum);
+                $('.container.center form input.signature-value').attr('value', robokassaData.signatureValue);
+                $('.container.center form').submit();
+            }
+
+        });
     });
 
     $(document).on('change', '.popup.zak.basket .container.basket input', function(){
@@ -427,6 +445,11 @@ jQuery(function ($) {
 
     $(document).on('click', '.close.popup-zak-basket', function(){
         $('.popup.zak.basket').children().remove();
+        checkID = [];
+    });
+    $(document).on('click', '.popup-zak-basket .container.center a.leave-busket', function(){
+        $('.popup.zak.basket').children().remove();
+        checkID = [];
     });
 
 
@@ -539,12 +562,9 @@ jQuery(function ($) {
     }
 
     function enableGiftField(){
-        if(($('.popup.zak.basket .buy-prepaid-checkbox')[0].checked)!==false) {
+        if(($('.popup.zak.basket .buy-prepaid-checkbox')[0].checked)!==false && $('.popup.zak.basket .container.basket ul.accessory-order-field').length >= 2) {
             if (checkID.length >= 2) {
-                $('#slider-accessories .viewport ul li .g-input.gift-button').css({
-                    display: 'block',
-                    visibility: 'visible'
-                });
+                $('#slider-accessories .viewport ul li .g-input.gift-button').css('display', 'block');
             }
         }
     }

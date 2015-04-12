@@ -393,6 +393,24 @@ function get_list_radio_accessories(){
 	die();
 }
 
+add_action("wp_ajax_create_signatureValue", "create_signatureValue");
+add_action("wp_ajax_nopriv_create_signatureValue", "create_signatureValue");
+
+function create_signatureValue(){
+	$robokassaData = get_posts(array('post_type' => 'robokassa_data'));
+	$robokassaMeta = get_post_meta( $robokassaData[0]->ID);
+	$robokassaLogin = $robokassaMeta['robokassa_login'][0];
+	$robokassaPass =  $robokassaMeta['robokassa_pass1'][0];
+	$inv_id = '0';
+	$out_sum = $_POST['orderTotal'];
+	$data = array();
+	$data['out_sum'] = $out_sum;
+	$data['signatureValue'] = md5("$robokassaLogin:$out_sum:$inv_id:$robokassaPass");
+
+	echo json_encode($data);
+	die();
+}
+
 add_action("wp_ajax_send_mail_order_request", "send_mail_order_request");
 add_action("wp_ajax_nopriv_send_mail_order_request", "send_mail_order_request");
 
