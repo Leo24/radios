@@ -379,6 +379,7 @@ function get_list_radio_accessories(){
 		$accessory_meta = get_post_meta( $accessory->ID);
 		$accessory_meta['accessory_ID'] = $accessory->ID;
 		$accessory_meta['accessory_name'] = $accessory->post_title;
+		$accessory_meta['post_content'] = $accessory->post_content;
 		$accessory_image = wp_get_attachment_metadata( $accessory_meta['accessory_image'][0] );
 		$upload_dir = wp_upload_dir();
 		$accessory_meta['accessory_image'] = $upload_dir['baseurl'].'/'.$accessory_image['file'];

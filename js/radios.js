@@ -1,6 +1,6 @@
 var products, index;
 var productName, productID, productImage, productPrice1, productPrice2, productPrice3, productPrice4, productImage1, productImage2, productImage3, monetary_unit,
-    accessoryName, accessoryID, accessoryImage, accessoryGiftOption, accessoryPrice1, accessoryPrice2, accessoryPrice3, accessoryPrice4, accessories,
+    accessoryName, accessoryID, accessoryImage, accessoryGiftOption, accessoryInfo, accessoryPrice1, accessoryPrice2, accessoryPrice3, accessoryPrice4, accessories,
     radioTemplate, radioTemplateDetailedInfo, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct, lineheight;
 var url = 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php';
 var orderedProductWithAcc = {
@@ -109,6 +109,8 @@ jQuery(function ($) {
                         accessoryPrice2 = accessory.price_2[0];
                         accessoryPrice3 = accessory.price_3[0];
                         accessoryPrice4 = accessory.price_4[0];
+                        accessoryInfo = accessory.post_content;
+                        accessoryInfo = accessoryInfo.replace(/<\/?[^>]+>/gi, '');
                         if(accessory.gift[0] === "1") {
                             //accessoryGiftOption = accessory.gift[0];
                             accessoryGiftOption = 'gift-button';
@@ -116,10 +118,10 @@ jQuery(function ($) {
                             accessoryGiftOption = '';
                         }
                         accessoryTemplate.push('<li>' +
-                        '<p class="accessory-name '+lineheight+'" id="accessory-name"><span class="accessory-name" accessoryID="'+accessoryID+'">'+accessoryName+'</span></p>'+
+                        '<p class="accessory-name '+lineheight+'" accessory-id="'+accessoryID+'" id="accessory-name"><span class="accessory-name" accessoryID="'+accessoryID+'">'+accessoryName+'</span></p>'+
                         '<div class="accessory-image" id="accessory-image"><img src="'+accessoryImage+'" alt="'+accessoryName+'"></div>'+
                         '<div class="g-input '+accessoryGiftOption+'"><span>Получить в подарок</span></div>' +
-                            //'<input type=image class="gift'+accessoryGiftOption+'" value="Получить в подарок"></p>'+
+                        '<input type=hidden accessoryInfo="'+accessoryInfo+'"></p>'+
                         '<p class="accessory-price-1 price-active" id="accessory-price-1"><span>'+accessoryPrice1+'</span>&nbsp;<span class="monetary-unit">'+monetary_unit+'</span></p>'+
                         '<p class="accessory-price-2 price-disabled" id=accessory-price-2"><span>'+accessoryPrice2+'</span>&nbsp;<span class="monetary-unit">'+monetary_unit+'</span></p>'+
                         '<p class="accessory-price-3 price-disabled" id="accessory-price-3"><span>'+accessoryPrice3+'</span>&nbsp;<span class="monetary-unit">'+monetary_unit+'</span></p>'+
@@ -480,6 +482,27 @@ jQuery(function ($) {
         checkID = [];
     });
 
+    $(document).on('mouseenter', '#slider-accessories .accessory-image', function(){
+        var accessoryInfo, accessoryImage, accessoryInfoTemplate;
+        var that = this;
+        accessoryID = $(that).parents().eq(0).find('.accessory-name').attr('accessory-id');
+        accessoryInfo = $(this).parents().eq(0).find('input').attr('accessoryinfo');
+        accessoryImage = $(this).find('img').attr('src');
+        accessoryInfoTemplate =
+            '<div class="accessory-detailed-info" accessory-id="'+accessoryID+'">' +
+                '<img class="accessory-info-image" src="'+accessoryImage+'">'+
+                '<p><pre>'+accessoryInfo+'</pre></p>'+
+            '</div>';
+        function renderAccessoryInfoTemplate(that){
+            $('.popup.zak.basket').append(accessoryInfoTemplate);
+        }
+        setTimeout(function(){
+            renderAccessoryInfoTemplate(that);
+            $(document).on('mouseleave', '#slider-accessories .accessory-image', function(){
+                $(this).parents().eq(4).find('.accessory-detailed-info').remove();
+            });
+        }, 500);
+    });
 
     $(document).on('click', '.center_form #btn2', function(event){
         event.preventDefault();
@@ -560,7 +583,6 @@ jQuery(function ($) {
         var totalSum=[];
         $('.popup.zak.basket .container.basket ul.count-total ').each(function(){
             //if($(this).find('li p.price').attr('totalsum') == "undefined"){
-            //    debugger;
             //    totalSum.push($(this).find('li p.price').text());
             //}else if(totalSum.push($(this).find('li p.price').length!==0)){
             //    totalSum.push($(this).find('li p.price').attr('totalsum'));
@@ -727,7 +749,6 @@ jQuery(function ($) {
         var price;
         switch (checkID.length) {
             case (0):
-                debugger;
                 price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-1');
                         $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
                 countTotal();

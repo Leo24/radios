@@ -1960,3 +1960,26 @@ a.cart{
 	color: #048ff2;
 }
 
+
+/*******Styles for accessory detailed info*******/
+
+.popup.zak.basket .accessory-detailed-info{
+	position: absolute;
+	left: 50px;
+	bottom: 200px;
+	display: block;
+	width: 400px;
+	height: auto;
+	background: #fff;
+	z-index: 2;
+}
+
+.popup.zak.basket .accessory-detailed-info pre{
+	margin-left: -40px;
+}
+
+.popup.zak.basket .accessory-detailed-info img{
+	display: block;
+	width: 260px;
+	height: 180px;
+}
