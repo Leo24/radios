@@ -1341,13 +1341,16 @@ td {
 	border: none;
 }
 .popup.zak ul li p.accessory-name {
-	width: 130px;
-	height: 40px;
+	width: 125px;
+	height: 60px;
 	overflow: hidden;
 	font-family: 'HelveticaNeueCyr-Roman';
 	color: #909090;
 	text-align: center;
 	/*vertical-align: middle;*/
+}
+.popup.zak ul li p.accessory-name.lineheight{
+	line-height: 50px;
 }
 /*.popup.zak ul li .accessory-image {*/
 	/*position: absolute;*/
@@ -1605,7 +1608,7 @@ td {
 	background-repeat:no-repeat;
 	background-position:center center;
 	font-family:'HelveticaNeueCyr-Light';
-	font-size:1.2em;
+	font-size: 18px;
 	color:#fff;
 }
 .popup.zak .continue:hover{
@@ -1916,7 +1919,7 @@ a.cart{
 .right_sitebar.left.del .container.img img{
 	display: block;
 	width: 321px;
-	height: 285px;
+	height: 214px;
 	margin: 15px auto;
 }
 
