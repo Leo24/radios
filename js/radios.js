@@ -1,7 +1,7 @@
 var products, index;
-var productName, productID, productImage, productPrice1, productPrice2, productPrice3, productImage1, productImage2, productImage3, monetary_unit,
+var productName, productID, productImage, productPrice1, productPrice2, productPrice3, productPrice4, productImage1, productImage2, productImage3, monetary_unit,
     accessoryName, accessoryID, accessoryImage, accessoryGiftOption, accessoryPrice1, accessoryPrice2, accessoryPrice3, accessoryPrice4, accessories,
-    radioTemplate, radioTemplateDetailedInfo, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct, signatureValue;
+    radioTemplate, radioTemplateDetailedInfo, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct, lineheight;
 var url = 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php';
 var orderedProductWithAcc = {
     radioName: '',
@@ -37,6 +37,7 @@ jQuery(function ($) {
                     productPrice1 = products[index].prices.price_1[0];
                     productPrice2 = products[index].prices.price_2[0];
                     productPrice3 = products[index].prices.price_3[0];
+                    productPrice4 = products[index].prices.price_4[0];
                     accessories = products[index].compatible_acessories;
                     productImage1 = products[index].radio_images.radio_image_1;
                     productImage2 = products[index].radio_images.radio_image_2;
@@ -46,13 +47,15 @@ jQuery(function ($) {
                     'product-image="' + productImage + '" ' +
                     'price-1="' + productPrice1 + '"' +
                     'price-2="' + productPrice2 + '"' +
-                    'price-3="' + productPrice3 + '"';
+                    'price-3="' + productPrice3 + '"'+
+                    'price-4="' + productPrice4 + '"';
                     radioTemplateDetailedInfo = 'product-name="' + productName + '" ' +
                     'product-id="' + productID + '"' +
                     'product-content="' + products[index].post_content + '"' +
                     'img-1="' + productImage1 + '"' +
                     'img-2="' + productImage2 + '"' +
                     'img-3="' + productImage3 + '"';
+
                     $('.container.c' + index + ' h2 text').append(productName);
                     $('.container.c' + index + ' h2').attr('productID', productID);
                     $('.container.c' + index + ' .content img').attr('src', productImage);
@@ -71,12 +74,15 @@ jQuery(function ($) {
 
     /* Render radio attributes*/
     $(document).on('click','.modul-3 .ccc .container .content p a .button.do-order', function(){
-        var radioName, radioID, radioImage, radioPrice;
+        var radioName, radioID, radioImage, radioPrice1, radioPrice2, radioPrice3, radioPrice4;
         //var that = $(this).parents().eq(4);
         radioName = $(this).attr('product-name');
         radioID = $(this).attr('product-id');
         radioImage = $(this).attr('product-image');
-        radioPrice = $(this).attr('price-1');
+        radioPrice1 = $(this).attr('price-1');
+        radioPrice2 = $(this).attr('price-2');
+        radioPrice3 = $(this).attr('price-3');
+        radioPrice4 = $(this).attr('price-4');
         jQuery.ajax({
             url: url,
             type: "POST",
@@ -91,6 +97,11 @@ jQuery(function ($) {
                     if (accessories.hasOwnProperty(key)) {
                         var accessory = accessories[key];
                         accessoryName = accessory.accessory_name;
+                        if (accessoryName.length <= 16) {
+                            lineheight = 'lineheight';
+                        }else{
+                            lineheight = '';
+                        }
                         accessoryID = accessory.accessory_ID;
                         accessoryImage = accessory.accessory_image;
                         monetary_unit = accessory.monetary_unit;
@@ -105,7 +116,7 @@ jQuery(function ($) {
                             accessoryGiftOption = '';
                         }
                         accessoryTemplate.push('<li>' +
-                        '<p class="accessory-name" id="accessory-name"><span class="accessory-name" accessoryID="'+accessoryID+'">'+accessoryName+'</span></p>'+
+                        '<p class="accessory-name '+lineheight+'" id="accessory-name"><span class="accessory-name" accessoryID="'+accessoryID+'">'+accessoryName+'</span></p>'+
                         '<div class="accessory-image" id="accessory-image"><img src="'+accessoryImage+'" alt="'+accessoryName+'"></div>'+
                         '<div class="g-input '+accessoryGiftOption+'"><span>Получить в подарок</span></div>' +
                             //'<input type=image class="gift'+accessoryGiftOption+'" value="Получить в подарок"></p>'+
@@ -149,16 +160,15 @@ jQuery(function ($) {
                     '</li>'+
                     '<li>'+
                     '<p class="text main name">'+radioName+'</p>'+
-
                     '</li>'+
                     '<li>'+
-                    '<p class="text main price"  totalsum="'+radioPrice+'" order-price="'+radioPrice+'">'+radioPrice+'</p>'+
+                    '<p class="text main price" totalsum="'+radioPrice1+'" order-price="'+radioPrice1+'" price-1="'+radioPrice1+'" price-2="'+radioPrice2+'" price-3="'+radioPrice3+'" price-4="'+radioPrice4+'">'+radioPrice1+'</p>'+
                     '</li>'+
                     '<li>'+
                     '<input class="text main kol-vo" id="radioID-'+radioID+'" value="1" defval="1" type="number"  min="1">'+
                     '</li>'+
                     '<li>'+
-                    '<p class="text main linetotal"  totalsum="'+totalSum+'">'+radioPrice+'</p>'+
+                    '<p class="text main linetotal"  totalsum="'+totalSum+'">'+radioPrice1+'</p>'+
                     '</li>'+
 
                     '<li>'+
@@ -207,7 +217,7 @@ jQuery(function ($) {
                     '</form>'+
                     '</div>'+
                     '<a class="close popup-zak-basket" title="Закрыть" href="#close"></a>';
-                inTotal=radioPrice;
+                inTotal=radioPrice1;
                 $('.popup.zak.basket').append(orderFormSingleProduct);
 
                 $(document).on('click', '#slider-accessories a', function(event){
@@ -216,7 +226,8 @@ jQuery(function ($) {
                 if(accessoryTemplateCheck.length >= 4){
                     $('#slider-accessories').tinycarousel();
                 }
-                switchPrices(currentAccessoryQty);
+                switchAccessoryPrices(currentAccessoryQty);
+                switchRadioPrices();
                 countTotal();
             }
         });
@@ -353,7 +364,8 @@ jQuery(function ($) {
             }
             countTotalInline();
             countTotal();
-            switchPrices(currentAccessoryQty);
+            switchAccessoryPrices(currentAccessoryQty);
+            switchRadioPrices();
         });
     });
 
@@ -393,7 +405,8 @@ jQuery(function ($) {
 
     $(document).on('change', '.popup.zak.basket .container.basket input', function(){
         countTotal();
-        switchPrices();
+        switchAccessoryPrices();
+        switchRadioPrices();
         countTotalInline();
     });
 
@@ -403,10 +416,23 @@ jQuery(function ($) {
             $('#slider-accessories .accessory-price-2').removeClass('price-disabled');
             $('#slider-accessories .accessory-price-3').removeClass('price-disabled');
             $('#slider-accessories .accessory-price-4').removeClass('price-disabled');
+            $('.popup.zak.basket .radio-order-field li .price-1').removeClass('price-active');
+            $('.popup.zak.basket .radio-order-field li .price-2').removeClass('price-disabled');
+            $('.popup.zak.basket .radio-order-field li .price-3').removeClass('price-disabled');
+            $('.popup.zak.basket .radio-order-field li .price-4').removeClass('price-disabled');
+
+
             $('#slider-accessories .accessory-price-1').addClass('price-line-through');
             $('#slider-accessories .accessory-price-2').addClass('price-active');
             $('#slider-accessories .accessory-price-3').addClass('price-enabled');
             $('#slider-accessories .accessory-price-4').addClass('price-enabled');
+            $('.popup.zak.basket .radio-order-field li .price-1').addClass('price-line-through');
+            $('.popup.zak.basket .radio-order-field li .price-2').addClass('price-active');
+            $('.popup.zak.basket .radio-order-field li .price-3').addClass('price-enabled');
+            $('.popup.zak.basket .radio-order-field li .price-4').addClass('price-enabled');
+
+
+
         }else{
             $('#slider-accessories').find('li p').each(function(){
                 $(this).removeClass('price-line-through');
@@ -423,7 +449,8 @@ jQuery(function ($) {
             $('#slider-accessories .viewport ul li .g-input').css('display', 'none');
         }
         countTotal();
-        switchPrices();
+        switchAccessoryPrices();
+        switchRadioPrices();
         countTotalInline();
     });
 
@@ -439,7 +466,8 @@ jQuery(function ($) {
         }
         $(this).parents().eq(1).remove();
         countTotal();
-        switchPrices();
+        switchAccessoryPrices();
+        switchRadioPrices();
         countTotalInline();
     });
 
@@ -525,25 +553,25 @@ jQuery(function ($) {
                 $(this).find('li p.text.main.price').html("Подарок");
 
             }
-
         });
     }
 
     function countTotal(){
         var totalSum=[];
         $('.popup.zak.basket .container.basket ul.count-total ').each(function(){
-            if($(this).find('li p.price').attr('totalsum') == "undefined"){
-                totalSum.push($(this).find('li p.price').text());
-            }else{
-                totalSum.push($(this).find('li p.price').attr('totalsum'));
-            }
+            //if($(this).find('li p.price').attr('totalsum') == "undefined"){
+            //    debugger;
+            //    totalSum.push($(this).find('li p.price').text());
+            //}else if(totalSum.push($(this).find('li p.price').length!==0)){
+            //    totalSum.push($(this).find('li p.price').attr('totalsum'));
+            //}else{
+                totalSum.push($(this).find('li p.linetotal').text());
+            //}
         });
         inTotal = 0;
         $.each(totalSum,function() {
             inTotal+= parseInt(this);
         });
-
-
         $('.popup.zak.basket .all-price').attr('total', inTotal);
         $('.popup.zak.basket .all-price').text(inTotal +' '+monetary_unit);
         var accessoryQty = [];
@@ -570,7 +598,7 @@ jQuery(function ($) {
     }
 
 
-    function switchPrices(){
+    function switchAccessoryPrices(){
         var sumOrderPrice, accessoryID, accessoryIDtoFind;
         if(($('.popup.zak.basket .buy-prepaid-checkbox')[0].checked)!==false) {
             switch (checkID.length) {
@@ -678,7 +706,6 @@ jQuery(function ($) {
             }
         }else{
 
-
             $('.popup.zak.basket .container.basket ul.accessory-order-field li p.price').each(function(){
                 var currAccID, accessoryPrice1, findAccessoryID;
                 currAccID = $(this).parents().eq(1).attr('accessoryid');
@@ -693,6 +720,37 @@ jQuery(function ($) {
 
             });
 
+        }
+    }
+
+    function switchRadioPrices(){
+        var price;
+        switch (checkID.length) {
+            case (0):
+                debugger;
+                price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-1');
+                        $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
+                countTotal();
+                countTotalInline();
+                break;
+            case (1):
+                price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-2');
+                $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
+                countTotal();
+                countTotalInline();
+                break;
+            case (2):
+                price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-3');
+                $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
+                countTotal();
+                countTotalInline();
+                break;
+            case (3):
+                price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-4');
+                $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
+                countTotal();
+                countTotalInline();
+                break;
         }
     }
 
