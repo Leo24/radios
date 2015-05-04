@@ -1,7 +1,9 @@
 var products, index;
 var productName, productID, productImage, productPrice1, productPrice2, productPrice3, productPrice4, productImage1, productImage2, productImage3, monetary_unit,
     accessoryName, accessoryID, accessoryImage, accessoryGiftOption, accessoryInfo, accessoryPrice1, accessoryPrice2, accessoryPrice3, accessoryPrice4, accessories,
-    radioTemplate, radioTemplateDetailedInfo, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct, lineheight;
+    radioTemplate, radioTemplateDetailedInfo, newQuantity, totalSum, orderPrice, inTotal, checkID = [],  currentAccessoryQty = 0, orderFormSingleProduct, lineheight,
+    goodsInBasket = [];
+
 var url = 'http:\/\/racii.com\/wordpress\/wp-admin\/admin-ajax.php';
 var orderedProductWithAcc = {
     radioName: '',
@@ -371,7 +373,7 @@ jQuery(function ($) {
         });
     });
 
-    /***********************************OnChange ana Onclick actions*************************************************/
+    /***********************************OnChange and Onclick actions*************************************************/
 
     $(document).on('change', '.popup.zak.basket ul', function(){
         newQuantity = $(this).find('.text.main.kol-vo').val();
@@ -393,7 +395,6 @@ jQuery(function ($) {
             data: {
                 orderTotal: orderTotal,
                 action: 'create_signatureValue'
-
             },
             success: function (data) {
                 var robokassaData = JSON.parse(data);
@@ -432,9 +433,6 @@ jQuery(function ($) {
             $('.popup.zak.basket .radio-order-field li .price-2').addClass('price-active');
             $('.popup.zak.basket .radio-order-field li .price-3').addClass('price-enabled');
             $('.popup.zak.basket .radio-order-field li .price-4').addClass('price-enabled');
-
-
-
         }else{
             $('#slider-accessories').find('li p').each(function(){
                 $(this).removeClass('price-line-through');
@@ -457,9 +455,9 @@ jQuery(function ($) {
     });
 
 
-    $(document).on('click', '.popup.zak.basket .continue.zak-basket', function(){
-        $('.popup.zak.basket').children().remove();
-    });
+    //$(document).on('click', '.popup.zak.basket .continue.zak-basket', function(){
+    //    $('.popup.zak.basket').children().remove();
+    //});
 
     $(document).on('click', '.popup.zak.basket .delete', function(){
         var index = checkID.indexOf($(this).parents().eq(1).attr('accessoryid'));
@@ -477,10 +475,143 @@ jQuery(function ($) {
         $('.popup.zak.basket').children().remove();
         checkID = [];
     });
-    $(document).on('click', '.popup-zak-basket .container.center a.leave-busket', function(){
+    $(document).on('click', '.container.center .leave-busket', function(){
+        var radioAttributes, radio, accessory, index, radiosInBasket = [], accessoriesInBasket = [], shipment = {};
+        radioAttributes = $(this).parents().eq(1).find('.radio-order-field li');
+        radio = {
+            radioID: $(radioAttributes).find('input.text.main').attr('id'),
+            radioImage: $(radioAttributes).find('.product-image').attr('src'),
+            radioName: $(radioAttributes).find('p.name').text(),
+            radioOrderedPrice: $(radioAttributes).find('p.linetotal').text(),
+            radioQty:$(radioAttributes).find('input.text.main').attr('value')
+        };
+        radiosInBasket.push(radio);
+        if($(this).parents().eq(1).find('.accessory-order-field').length !=0){
+            $(this).parents().eq(1).find('.accessory-order-field').each(function(){
+                accessory = {
+                    accessoryID: $(this).find('p.name').attr('accessoryid'),
+                    accessoryName: $(this).find('p.name').text(),
+                    accessoryImage: $(this).find('.accessory-image').attr('src'),
+                    accessoryOrderedPrice: $(this).find('p.linetotal').text(),
+                    accessoryQty:$(this).find('input.kol-vo').attr('value')
+                };
+                accessoriesInBasket.push(accessory);
+            });
+        }
+        shipment = {
+            radiosInBasket: radiosInBasket,
+            accessoriesInBasket: accessoriesInBasket
+        };
+        goodsInBasket.push(shipment);
         $('.popup.zak.basket').children().remove();
         checkID = [];
     });
+
+     $(document).on('click', '.cart', function(){
+        var radioInBasket, accessoriesInBasket, accessoryInBasket, radioID, radioName, radioImage, radioOrderedPrice, radioQty,
+            accessoryID, accessoryImage, accessoryName, accessoryOrderedPrice, accessoryQty,
+            radioWithAccessoriesTemplate = [], accessoryTemplate = [], orderForm;
+         for (var index in goodsInBasket) {
+             if (goodsInBasket.hasOwnProperty(index)) {
+                 radioInBasket = goodsInBasket[index].radiosInBasket;
+                 radioID = radioInBasket[0].radioID;
+                 radioName = radioInBasket[0].radioName;
+                 radioImage = radioInBasket[0].radioImage;
+                 radioOrderedPrice = radioInBasket[0].radioOrderedPrice;
+                 radioQty = radioInBasket[0].radioQty;
+                 accessoriesInBasket = goodsInBasket[index].accessoriesInBasket;
+
+                 if (accessoriesInBasket.length != 0) {
+                     for (var key in accessoriesInBasket) {
+                         accessoryInBasket = accessoriesInBasket[key];
+                         accessoryID = accessoryInBasket.accessoryID;
+                         accessoryImage = accessoryInBasket.accessoryImage;
+                         accessoryName = accessoryInBasket.accessoryName;
+                         accessoryOrderedPrice = accessoryInBasket.accessoryOrderedPrice;
+                         accessoryQty = accessoryInBasket.accessoryQty;
+                         debugger;
+                         var arrayElement = '<li>' +
+                             '<div class="accessory-image"><img src="'+accessoryImage+'" alt="'+accessoryName+'"></div>'+
+                             '<p class="accessory-name" accessory-id="' + accessoryID + '" id="accessory-name"><span class="accessory-name" accessoryID="' + accessoryID + '">' + accessoryName + '</span></p>' +
+                             '<p class="accessory-price"><span>' + accessoryOrderedPrice + '</span></p>' +
+                             '<p class="accessory-qty"><span>' + accessoryQty + '</span></p>' +
+                             '</li>';
+                         accessoryTemplate.push(arrayElement);
+                     }
+                 }
+                 accessoryTemplate = accessoryTemplate.slice().join().replace(/,/g , " ");
+                 var radioWithAccessories =
+                     '<ul class = "radio-order-field count-total" radioID="'+radioID+'">'+
+                     '<li>'+
+                     '<div class="image-wrapper">'+
+                     '<div class="product-background-image"></div><img class="product-image" src="'+radioImage +'" alt=="'+radioName+'">' +
+                     '</div>'+
+                     '</li>'+
+                     '<li>'+
+                     '<p class="text main name">'+radioName+'</p>'+
+                     '</li>'+
+                     '<li>'+
+                     '<p class="text main price">'+radioOrderedPrice+'</p>'+
+                     '</li>'+
+                     '<li>'+
+                     '<p class="text main linetotal">'+radioQty+'</p>'+
+                     '</li>'+
+                     '<li>'+
+                     '<input class="delete" type="button" value="удалить" onclick="">'+
+                     '</li>'+
+                     '<hr class="hr-main">'+
+                     '</ul>'+
+                     '<ul class="accessories-list">'+
+                     accessoryTemplate+
+                     '</ul>';
+                 accessoryTemplate = [];
+                 radioWithAccessoriesTemplate.push(radioWithAccessories);
+             }
+         }
+         radioWithAccessoriesTemplate = radioWithAccessoriesTemplate.slice().join().replace(/,/g , " ");
+         orderForm =
+             '<h1><img src="img/png/cart.png" alt="cart">&nbsp;Корзина</h1>'+
+             '<div class="container basket order">'+
+             '<div class = "radio-order-field-title">'+
+             '<ul>'+
+             '<li>'+
+             '<p class="text title">Название и модель</p>'+
+             '</li>'+
+             '<li>'+
+             '<p class="text title">Цена</p>'+
+             '</li>'+
+             '<li>'+
+             '<p class="text title">Кол-во</p>'+
+             '</li>'+
+             '<li>'+
+             '<p class="text title">Всего</p>'+
+             '</li>'+
+             '</ul>'+
+             '<hr class="hr-title">'+
+             '</div>'+
+                radioWithAccessoriesTemplate+
+             '</div>'+
+
+             '<div class="container center">'+
+             '<a class="continue zak-basket leave-busket" href="#close">Продолжить покупки</a>'+
+             '<form class="continue order order-zak-basket" action="http://test.robokassa.ru/Index.aspx" method="get">' +
+             '<input type="hidden" name="MrchLogin" value="TestRadioLandingShop25">'+
+             '<input class="outsum" type="hidden" name="OutSum" value="">'+
+             '<input class="invid" type="hidden" name="InvId" value="0">'+
+             '<input class="desc" type="hidden" name="Desc" value="desc">'+
+             '<input class="inccurrent" type="hidden" name="IncCurrent" value="WMZM">'+/*валюта*/
+             '<input type="hidden" name="Culture" value="ru">'+
+             '<input type="hidden" name="Encoding" value="utf-8">'+
+             '<input class="signature-value" type="hidden" name="SignatureValue" value="">'+
+             '<a class="continue order order-zak-basket" href="#win6">Оформить</a>'+
+             '</form>'+
+             '</div>'+
+             '<a class="close popup-zak-basket" title="Закрыть" href="#close"></a>';
+
+         $('.popup.zak.basket').append(orderForm);
+    });
+
+
 
     $(document).on('mouseenter', '#slider-accessories .accessory-image', function(){
         var accessoryInfo, accessoryImage, accessoryInfoTemplate;
@@ -493,19 +624,31 @@ jQuery(function ($) {
                 '<img class="accessory-info-image" src="'+accessoryImage+'">'+
                 '<p><pre>'+accessoryInfo+'</pre></p>'+
             '</div>';
+
+        //setTimeout(function(){
+        $('.popup.zak.basket').append(accessoryInfoTemplate);
+            renderAccessoryInfoTemplate(that);
+        //}, 0);
+
         function renderAccessoryInfoTemplate(that){
             $('.popup.zak.basket').append(accessoryInfoTemplate);
         }
-        setTimeout(function(){
-            renderAccessoryInfoTemplate(that);
-            $(document).on('mouseleave', '#slider-accessories .accessory-image', function(){
-                $(this).parents().eq(4).find('.accessory-detailed-info').remove();
-            });
-        }, 500);
+
+    });
+
+    $(document).on('mouseleave', '#slider-accessories .accessory-image', function(){
+        $(this).parents().eq(4).find('.accessory-detailed-info').remove();
+    });
+    $(document).on('mouseleave', '#slider-accessories .viewport', function(){
+        $(this).parents().eq(0).find('.accessory-detailed-info').remove();
+    });
+
+    $('.popup.zak.basket .restriction-message .close').click(function(){
+        $(this).parent().remove();
     });
 
     $(document).on('click', '.center_form #btn2', function(event){
-        event.preventDefault();
+        event.preventDefault;
         var index = 0;
 
         //var orderedProductsWithAcc = {};
@@ -556,7 +699,7 @@ jQuery(function ($) {
                 setTimeout($('.popup').click(), 1000);
             }
         });
-        $('.popup.zak.basket').children().remove();
+        $('.popup.zak.basket').children().remove
     });
 
     /**************************FUNCTIONS********************************/
@@ -751,24 +894,28 @@ jQuery(function ($) {
             case (0):
                 price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-1');
                         $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
+                $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').removeClass('price-active');
                 countTotal();
                 countTotalInline();
                 break;
             case (1):
                 price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-2');
                 $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
+                $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').addClass('price-active');
                 countTotal();
                 countTotalInline();
                 break;
             case (2):
                 price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-3');
                 $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
+                $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').addClass('price-active');
                 countTotal();
                 countTotalInline();
                 break;
             case (3):
                 price = $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').attr('price-4');
                 $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').text(price);
+                $('.popup.zak.basket .container.basket ul.radio-order-field li p.price').addClass('price-active');
                 countTotal();
                 countTotalInline();
                 break;
